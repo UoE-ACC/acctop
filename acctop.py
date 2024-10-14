@@ -282,7 +282,7 @@ def main():
         print("\nExiting real-time monitoring.")
 
 if __name__ == "__main__":
-    main()
+    # main()
     def parse_arguments():
         parser = argparse.ArgumentParser(description="Real-Time System Resource Monitoring Tool")
         parser.add_argument('--interval', type=float, default=2.5, help='Update interval in seconds (default: 2.5)')
