@@ -263,26 +263,9 @@ def display_system_info():
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def main():
-    try:
-        while True:
-            clear_console()  # Clear the screen
-            print(f"{HEADER_COLOR}=== Real-Time System Resource Usage for {os.uname().nodename.capitalize()} ==={RESET_COLOR}")
-            display_disk_usage()  # Disk usage with a bar
-            display_memory_usage()  # Memory usage with a bar
-            display_cpu_usage_in_columns()  # Dynamically set number of columns based on terminal width
-            display_user_usage()  # Cumulative user usage with CPU normalized by number of cores
-            # display_network_usage()  # Network usage with aligned columns and colored headers
-            # display_load_average()  # Load average
-            # display_system_info()  # System uptime and kernel version
-            print(f"{HEADER_COLOR}========================================{RESET_COLOR}")
-            print('Press ctrl+c to exit...')
-            time.sleep(2.5)  # Update every 2.5 seconds
-    except KeyboardInterrupt:
-        print("\nExiting real-time monitoring.")
 
 if __name__ == "__main__":
-    # main()
+
     def parse_arguments():
         parser = argparse.ArgumentParser(description="Real-Time System Resource Monitoring Tool")
         parser.add_argument('--interval', type=float, default=2.5, help='Update interval in seconds (default: 2.5)')
@@ -291,24 +274,23 @@ if __name__ == "__main__":
         parser.add_argument('--show-system', action='store_true', help='Display system info')
         return parser.parse_args()
 
-    if __name__ == "__main__":
-        args = parse_arguments()
-        try:
-            while True:
-                clear_console()  # Clear the screen
-                print(f"{HEADER_COLOR}=== Real-Time System Resource Usage for {os.uname().nodename.capitalize()} ==={RESET_COLOR}")
-                display_disk_usage()  # Disk usage with a bar
-                display_memory_usage()  # Memory usage with a bar
-                display_cpu_usage_in_columns()  # Dynamically set number of columns based on terminal width
-                display_user_usage()  # Cumulative user usage with CPU normalized by number of cores
-                if args.show_network:
-                    display_network_usage()  # Network usage with aligned columns and colored headers
-                if args.show_load:
-                    display_load_average()  # Load average
-                if args.show_system:
-                    display_system_info()  # System uptime and kernel version
-                print(f"{HEADER_COLOR}========================================{RESET_COLOR}")
-                print('Press ctrl+c to exit...')
-                time.sleep(args.interval)  # Update based on the interval argument
-        except KeyboardInterrupt:
-            print("\nExiting real-time monitoring.")
+    args = parse_arguments()
+    try:
+        while True:
+            clear_console()  # Clear the screen
+            print(f"{HEADER_COLOR}=== Real-Time System Resource Usage for {os.uname().nodename.capitalize()} ==={RESET_COLOR}")
+            display_disk_usage()  # Disk usage with a bar
+            display_memory_usage()  # Memory usage with a bar
+            display_cpu_usage_in_columns()  # Dynamically set number of columns based on terminal width
+            display_user_usage()  # Cumulative user usage with CPU normalized by number of cores
+            if args.show_network:
+                display_network_usage()  # Network usage with aligned columns and colored headers
+            if args.show_load:
+                display_load_average()  # Load average
+            if args.show_system:
+                display_system_info()  # System uptime and kernel version
+            print(f"{HEADER_COLOR}========================================{RESET_COLOR}")
+            print('Press ctrl+c to exit...')
+            time.sleep(args.interval)  # Update based on the interval argument
+    except KeyboardInterrupt:
+        print("\nExiting real-time monitoring.")
