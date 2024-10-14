@@ -224,16 +224,15 @@ def display_network_usage():
 
     # Determine the width of each column
     iface_width = max(len(iface) for iface in net_io.keys()) + 2
-    sent_width = 20
     max_megabytes_sent_len =   len(str(max(stats.bytes_sent / (1024 ** 2) for stats in net_io.values())))
     max_megabytes_recv_len =   len(str(max(stats.bytes_recv / (1024 ** 2) for stats in net_io.values())))
     max_packets_sent_len = len(str(max(stats.packets_sent for stats in net_io.values())))
     max_packets_recv_len = len(str(max(stats.packets_recv for stats in net_io.values())))
     print(max_megabytes_sent_len, max_megabytes_recv_len, max_packets_sent_len, max_packets_recv_len)
-    input()
-    recv_width = 20
-    packets_sent_width = 15
-    packets_recv_width = 15
+    # input()
+    # recv_width = 20
+    # packets_sent_width = 15
+    # packets_recv_width = 15
 
     # Header row with colored titles
     header = (f"{HEADER_COLOR}{'Interface'.ljust(iface_width)} | "
@@ -247,10 +246,10 @@ def display_network_usage():
     # Data rows
     for interface, stats in net_io.items():
         print(f"{interface.ljust(iface_width)} | "
-              f"{int(stats.bytes_sent / (1024 ** 2))} MB".rjust(max_megabytes_sent_len) + " | "
-              f"{int(stats.bytes_recv / (1024 ** 2))} MB".rjust(max_megabytes_recv_len) + " | "
-              f"{stats.packets_sent}".rjust(max_packets_sent_len) + " | "
-              f"{stats.packets_recv}".rjust(max_packets_recv_len))
+              f"{int(stats.bytes_sent / (1024 ** 2))} MB".ljust(max_megabytes_sent_len) + " | "
+              f"{int(stats.bytes_recv / (1024 ** 2))} MB".ljust(max_megabytes_recv_len) + " | "
+              f"{stats.packets_sent}".ljust(max_packets_sent_len) + " | "
+              f"{stats.packets_recv}".ljust(max_packets_recv_len))
     print("")
 
 def display_load_average():
