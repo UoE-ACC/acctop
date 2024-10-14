@@ -78,12 +78,25 @@ def create_memory_usage_bar(percentage, bar_length=30):
     return f"{color}[{'#' * num_bars}{' ' * (bar_length - num_bars)}] {percentage:6.2f}%{RESET_COLOR}"
 
 def create_disk_usage_bar(percentage, bar_length=30):
-    """Returns a string representing an ASCII bar chart of disk usage with color."""
+    """
+    Generate an ASCII bar chart representing disk usage with color.
+    Args:
+        percentage (float): The disk usage percentage.
+        bar_length (int, optional): The length of the bar. Defaults to 30.
+    Returns:
+        str: A string representing the colored ASCII bar chart of disk usage.
+    """
+
     color = get_usage_color(percentage)
     num_bars = int((percentage / 100) * bar_length)
     return f"{color}[{'#' * num_bars}{' ' * (bar_length - num_bars)}] {percentage:6.2f}%{RESET_COLOR}"
 
 def display_disk_usage():
+    """
+    Displays the disk usage statistics including total, used, and free space
+    in gigabytes, along with a visual usage bar.
+    """
+
     disk_usage = psutil.disk_usage('/')
     print(f"{DISK_COLOR}=== Disk Usage ==={RESET_COLOR}")
     usage_percentage = disk_usage.percent
@@ -94,6 +107,26 @@ def display_disk_usage():
     print("")
 
 def display_memory_usage():
+    """
+    Display the current memory and swap usage statistics.
+    This function retrieves memory and swap usage information using the `psutil` library,
+    formats the data, and prints it in a human-readable format. The output includes the
+    total, used, and available memory in gigabytes (GB), as well as a visual representation
+    of memory usage as a bar.
+    The function prints the following information:
+    - Total memory in GB
+    - Used memory in GB
+    - Available memory in GB
+    - Memory usage bar
+    Note:
+        This function assumes that the `psutil` library is installed and available.
+        It also uses some global variables for color formatting (`MEMORY_COLOR`, `RESET_COLOR`).
+    Example:
+        >>> display_memory_usage()
+        === Memory Usage ===
+        Total: 16.00 GB | Used: 8.00 GB | Available: 7.50 GB | [##########          ]
+    """
+
     memory_info = psutil.virtual_memory()
     swap_info = psutil.swap_memory()
 
@@ -116,6 +149,23 @@ def display_memory_usage():
     print("")
 
 def get_cpu_columns(column_width):
+    """
+    Determine the number of CPU columns to display based on the terminal width.
+    This function calculates the number of columns to use for displaying CPU information
+    based on the width of the terminal and a given column width. It returns a value between
+    1 and 5, where 1 indicates a narrow terminal and 5 indicates an extra extra wide terminal.
+    Args:
+        column_width (int): The width of a single column.
+    Returns:
+        int: The number of columns to use for displaying CPU information. Possible values are:
+             - 1: Narrow terminal
+             - 2: Medium terminal
+             - 3: Wide terminal
+             - 4: Extra wide terminal
+             - 5: Extra extra wide terminal
+             - 2: Default if terminal size cannot be determined
+    """
+
     try:
         terminal_width = os.get_terminal_size().columns
         if terminal_width < column_width*2:
@@ -132,6 +182,15 @@ def get_cpu_columns(column_width):
         return 2  # Default to 2 columns if terminal size cannot be determined
 
 def display_cpu_usage_in_columns():
+    """
+    Display CPU usage for each core in a formatted column layout.
+    This function retrieves the CPU usage percentages for each core,
+    formats them into columns based on the terminal width, and prints
+    the usage bars along with the core labels. It also prints the average
+    CPU usage at the end.
+    """
+
+
     print(f"{CPU_COLOR}=== CPU Usage ==={RESET_COLOR}")
 
     cpu_percentages = psutil.cpu_percent(percpu=True)
@@ -172,6 +231,13 @@ def display_cpu_usage_in_columns():
     print("")
 
 def display_user_usage():
+    """
+    Display cumulative CPU, memory usage, and process count for each user.
+    This function iterates over all running processes, accumulates CPU and memory usage,
+    and counts the number of processes for each user. It then filters users based on
+    specified CPU and memory usage thresholds and displays the results in a formatted table.
+    """
+
     print(f"{USER_COLOR}=== Cumulative User CPU, Memory Usage, and Process Count ==={RESET_COLOR}")
 
     # Define thresholds
@@ -219,8 +285,14 @@ def display_user_usage():
     print("")
 
 def display_network_usage():
+    """
+    Display network usage statistics including bytes sent, bytes received,
+    packets sent, and packets received for each network interface.
+    """
+
     print(f"{NETWORK_COLOR}=== Network Usage ==={RESET_COLOR}")
-    net_io = psutil.net_io_counters(pernic=True)
+
+    net_io = psutil.net_io_counters(pernic=True) # Get network I/O statistics per network interface
 
     # Column titles
     coltitle_interface = "Interface"
@@ -235,11 +307,6 @@ def display_network_usage():
     max_megabytes_recv_len = max(len(coltitle_megabytes_recv), len(str(max(stats.bytes_recv / (1024 ** 2) for stats in net_io.values()))))
     max_packets_sent_len = max(len(coltitle_packets_sent), len(str(max(stats.packets_sent for stats in net_io.values()))))
     max_packets_recv_len = max(len(coltitle_packets_recv), len(str(max(stats.packets_recv for stats in net_io.values()))))
-    print(max_megabytes_sent_len, max_megabytes_recv_len, max_packets_sent_len, max_packets_recv_len)
-    # input()
-    # recv_width = 20
-    # packets_sent_width = 15
-    # packets_recv_width = 15
 
     # Header row with colored titles
     header = (f"{HEADER_COLOR}{coltitle_interface.ljust(iface_width)} | "
@@ -248,7 +315,7 @@ def display_network_usage():
               f"{coltitle_packets_sent.rjust(max_packets_sent_len)} | "
               f"{coltitle_packets_recv.rjust(max_packets_recv_len)}{RESET_COLOR}")
     print(header)
-    print("-" * len(header))
+    print("-" * len(header)) # Separator line
 
     # Data rows
     for interface, stats in net_io.items():
@@ -260,6 +327,10 @@ def display_network_usage():
     print("")
 
 def display_load_average():
+    """
+    Display the system load averages for the past 1, 5, and 15 minutes.
+    """
+
     print(f"{LOAD_COLOR}=== Load Average ==={RESET_COLOR}")
     load_avg = os.getloadavg()  # Returns a tuple of (1min, 5min, 15min load averages)
     print(f"1 min: {load_avg[0]:.2f} | "
@@ -268,6 +339,10 @@ def display_load_average():
     print("")
 
 def display_system_info():
+    """
+    Displays system information including uptime and kernel version.
+    """
+
     print(f"{INFO_COLOR}=== System Info ==={RESET_COLOR}")
     uptime_seconds = time.time() - psutil.boot_time()
     uptime = time.strftime("%H:%M:%S", time.gmtime(uptime_seconds))
@@ -277,12 +352,22 @@ def display_system_info():
     print("")
 
 def clear_console():
+    """
+    Clears the console screen. Works on both Windows and Unix-like systems.
+    """
+
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
 if __name__ == "__main__":
 
     def parse_arguments():
+        """
+        Parses command-line arguments for the Real-Time System Resource Monitoring Tool.
+        Returns:
+            argparse.Namespace: Parsed command-line arguments.
+        """
+
         # Parse command-line arguments
         parser = argparse.ArgumentParser(description="Real-Time System Resource Monitoring Tool")
         parser.add_argument('--interval', type=float, default=2.5, help='Update interval in seconds (default: 2.5)')
