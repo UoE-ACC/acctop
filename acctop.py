@@ -186,7 +186,7 @@ def display_user_usage():
             # Get process information
             proc_info = proc.info
             username = proc_info['username']
-            if username and username != 'root':  # Ensure the process has a valid username and is not root
+            if username:  # Ensure the process has a valid username
                 # Accumulate the CPU and memory usage for each user
                 user_data = user_usage[username]
                 user_data['cpu'] += proc_info['cpu_percent']
