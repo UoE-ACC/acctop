@@ -148,7 +148,7 @@ def display_cpu_usage_in_columns():
     print(core_label_width, core_number_width, core_joined_label_width, max_bar_length)
 
     # Total column width (bar + percentage + spacing)
-    column_width = core_joined_label_width + max_bar_length +2 # Extra space for spacing and formatting
+    column_width = core_joined_label_width + max_bar_length +3 # Extra space for spacing and formatting
 
     # Determine the number of columns based on terminal width and the column display width
     columns = get_cpu_columns(column_width)
