@@ -55,13 +55,14 @@ for shell_config in "$HOME/.bashrc" "$HOME/.zshrc"; do
     echo "Adding .bin directory to PATH in $shell_config"
     if [ -f "$shell_config" ]; then
         echo 'export PATH="$PATH:$HOME/.bin"' >> "$shell_config"
+        source "$shell_config"
     fi
 done
 
 # Source the .zshrc file to update the PATH
-echo "=============================="
-echo "Sourcing the .zshrc file to update the PATH"
-source "$HOME/.zshrc"
+# echo "=============================="
+# echo "Sourcing the .zshrc file to update the PATH"
+# source "$HOME/.zshrc"
 
 
 # Clean up the build directory
