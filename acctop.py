@@ -136,12 +136,15 @@ def display_cpu_usage_in_columns():
     # Determine the width needed for the core labels, bars, and percentages
     num_cores = len(cpu_percentages)
 
-    core_label_width = len(f"Core {num_cores}")
+    core_label_width = len("Core ")  # Default width for the core label
+    core_number_width = len(str(len(num_cores)))  # Width of the core number
+    core_joined_label_width = core_label_width+core_number_width  # Width of the core label with number
+
     max_bar_length = max(len(create_cpu_usage_bar(p).rstrip()) for p in cpu_percentages)
     max_percentage_width = max(len(f"{p:6.2f}%") for p in cpu_percentages)
 
     # Total column width (bar + percentage + spacing)
-    column_width = core_label_width + max_bar_length + max_percentage_width  # Extra space for spacing and formatting
+    column_width = core_joined_label_width + max_bar_length + max_percentage_width  # Extra space for spacing and formatting
 
     # Determine the number of columns based on terminal width and the column display width
     columns = get_cpu_columns(column_width)
@@ -153,7 +156,7 @@ def display_cpu_usage_in_columns():
     row_data = []
     for i, percentage in enumerate(cpu_percentages):
         bar = create_cpu_usage_bar(percentage)
-        entry = f"Core {i:<{core_label_width-len("Core")}}: {bar}  "
+        entry = f"Core {i:<{core_number_width}}: {bar}  "
         row_data.append(entry)
 
         # When we have enough data for a full row or it's the last core, print the row
