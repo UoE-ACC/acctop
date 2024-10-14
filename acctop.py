@@ -148,25 +148,24 @@ def display_user_usage():
             # Get process information
             proc_info = proc.info
             username = proc_info['username']
-            cpu_percent = proc_info['cpu_percent']
-            memory_percent = proc_info['memory_percent']
-
             if username:  # Ensure the process has a valid username
                 # Accumulate the CPU and memory usage for each user
-                user_usage[username]['cpu'] += cpu_percent
-                user_usage[username]['memory'] += memory_percent
+                user_data = user_usage[username]
+                user_data['cpu'] += proc_info['cpu_percent']
+                user_data['memory'] += proc_info['memory_percent']
                 # Increment the process count for the user
-                user_usage[username]['processes'] += 1
-
+                user_data['processes'] += 1
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-            pass
+            continue
 
     # Filter users based on the thresholds
     filtered_user_data = [
-        {'Username': user,
-         'CPU Usage (%)': f"{get_usage_color((usage['cpu'] / num_cpus))}{(usage['cpu'] / num_cpus):.6f}{RESET_COLOR}",
-         'Memory Usage (%)': f"{get_usage_color(usage['memory'])}{usage['memory']:.6f}{RESET_COLOR}",
-         'Process Count': usage['processes']}
+        {
+            'Username': user,
+            'CPU Usage (%)': f"{get_usage_color((usage['cpu'] / num_cpus))}{(usage['cpu'] / num_cpus):.6f}{RESET_COLOR}",
+            'Memory Usage (%)': f"{get_usage_color(usage['memory'])}{usage['memory']:.6f}{RESET_COLOR}",
+            'Process Count': usage['processes']
+        }
         for user, usage in user_usage.items()
         if (usage['cpu'] / num_cpus) > cpu_threshold or usage['memory'] > memory_threshold
     ]
