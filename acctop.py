@@ -153,7 +153,7 @@ def display_cpu_usage_in_columns():
     row_data = []
     for i, percentage in enumerate(cpu_percentages):
         bar = create_cpu_usage_bar(percentage)
-        entry = f"Core {i:<{core_label_width}}: {bar}  "
+        entry = f"Core {i:<{core_label_width-len("Core")}}: {bar}  "
         row_data.append(entry)
 
         # When we have enough data for a full row or it's the last core, print the row
