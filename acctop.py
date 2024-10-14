@@ -234,12 +234,18 @@ def display_network_usage():
     # packets_sent_width = 15
     # packets_recv_width = 15
 
+    coltitle_interface = "Interface"
+    coltitle_megabytes_sent = "Bytes Sent (MB)"
+    coltitle_megabytes_recv = "Bytes Recv (MB)"
+    coltitle_packets_sent = "Packets Sent"
+    coltitle_packets_recv = "Packets Recv"
+
     # Header row with colored titles
-    header = (f"{HEADER_COLOR}{'Interface'.ljust(iface_width)} | "
-              f"{'Bytes Sent (MB)'.rjust(max_megabytes_sent_len)} | "
-              f"{'Bytes Recv (MB)'.rjust(max_megabytes_recv_len)} | "
-              f"{'Packets Sent'.rjust(max_packets_sent_len)} | "
-              f"{'Packets Recv'.rjust(max_packets_recv_len)}{RESET_COLOR}")
+    header = (f"{HEADER_COLOR}{coltitle_interface.ljust(iface_width)} | "
+              f"{coltitle_megabytes_sent.rjust(max_megabytes_sent_len)} | "
+              f"{coltitle_megabytes_recv.rjust(max_megabytes_recv_len)} | "
+              f"{coltitle_packets_sent.rjust(max_packets_sent_len)} | "
+              f"{coltitle_packets_recv.rjust(max_packets_recv_len)}{RESET_COLOR}")
     print(header)
     print("-" * len(header))
 
