@@ -137,12 +137,12 @@ def display_cpu_usage_in_columns():
     columns = get_cpu_columns()
 
     # Determine the width needed for the core labels, bars, and percentages
-    num_cores = len(str(len(cpu_percentages)))
-    print(num_cores)
-    input()
+    num_cores_width = len(str(len(cpu_percentages)))
+    # print(num_cores)
+    # input()
 
 
-    core_label_width = len(f"Core {len(num_cores) +2}")
+    core_label_width = len(f"Core {len(num_cores_width) +2}")
     max_bar_length = max(len(create_cpu_usage_bar(p).rstrip()) for p in cpu_percentages)
     max_percentage_width = max(len(f"{p:6.2f}%") for p in cpu_percentages)
 
