@@ -48,6 +48,7 @@ DISK_COLOR      = "\033[1;35m"  # Bold Magenta"
 NETWORK_COLOR   = "\033[1;35m"  # Bold Magenta
 USER_COLOR      = "\033[1;35m"  # Bold Magenta"
 LOAD_COLOR      = "\033[1;35m"  # Bold Magenta"
+INFO_COLOR      = "\033[1;35m"  # Bold Magenta"
 RESET_COLOR     = "\033[0m"     # Reset to default
 
 # Additional ANSI escape codes for CPU and memory usage bars
@@ -253,7 +254,7 @@ def display_load_average():
           f"15 min: {load_avg[2]:.2f}")
 
 def display_system_info():
-    print(f"{HEADER_COLOR}=== System Info ==={RESET_COLOR}")
+    print(f"{INFO_COLOR}=== System Info ==={RESET_COLOR}")
     uptime_seconds = time.time() - psutil.boot_time()
     uptime = time.strftime("%H:%M:%S", time.gmtime(uptime_seconds))
     kernel_version = os.uname().release
