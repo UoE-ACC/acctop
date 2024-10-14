@@ -7,6 +7,13 @@ echo "=============================="
 # Print out command arguments during execution
 set -x
 
+# Remove the venv if it exists
+echo "=============================="
+echo "Removing the venv if it exists"
+if [ -d "venv" ]; then
+    rm -rf venv
+fi
+
 # Install the required packages
 echo "=============================="
 echo "Installing the required packages"
