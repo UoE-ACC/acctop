@@ -127,9 +127,7 @@ def display_cpu_usage_in_columns():
                 row_data.append(" " * column_width)  # Add empty string to fill the columns
             print(row_format.format(*row_data))
             row_data = []  # Reset for the next row
-    percentage = psutil.cpu_percent()
-    color = get_usage_color(percentage)
-    print(f"Overall CPU Usage: {color}{percentage}%{RESET_COLOR}")
+    print(f"Overall CPU Usage: {get_usage_color(psutil.cpu_percent())}{psutil.cpu_percent()}%{RESET_COLOR}")
     print("")
 
 def display_user_usage():
@@ -166,8 +164,8 @@ def display_user_usage():
     # Filter users based on the thresholds
     filtered_user_data = [
         {'Username': user,
-         'CPU Usage (%)': f"{(usage['cpu'] / num_cpus):.6f}",
-         'Memory Usage (%)': f"{usage['memory']:.6f}",
+         'CPU Usage (%)': f"{get_usage_color((usage['cpu'] / num_cpus))}{(usage['cpu'] / num_cpus):.6f}{RESET_COLOR}",
+         'Memory Usage (%)': f"{get_usage_color(usage['memory'])}{usage['memory']:.6f}{RESET_COLOR}",
          'Process Count': usage['processes']}
         for user, usage in user_usage.items()
         if (usage['cpu'] / num_cpus) > cpu_threshold or usage['memory'] > memory_threshold
