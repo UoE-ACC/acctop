@@ -246,8 +246,8 @@ def display_network_usage():
     # Data rows
     for interface, stats in net_io.items():
         print(f"{interface.ljust(iface_width)} | "
-              f"{str(int(stats.bytes_sent / (1024 ** 2))).rjust(max_megabytes_sent_len)} MB | "
-              f"{str(int(stats.bytes_recv / (1024 ** 2))).rjust(max_megabytes_recv_len)} MB | "
+              f"{str(int(stats.bytes_sent / (1024 ** 2))).rjust(max_megabytes_sent_len)} | "
+              f"{str(int(stats.bytes_recv / (1024 ** 2))).rjust(max_megabytes_recv_len)} | "
               f"{str(stats.packets_sent).rjust(max_packets_sent_len)} | "
               f"{str(stats.packets_recv).rjust(max_packets_recv_len)}")
     print("")
