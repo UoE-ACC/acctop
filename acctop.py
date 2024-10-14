@@ -105,7 +105,7 @@ def display_cpu_usage_in_columns():
     # Determine the width needed for the core labels, bars, and percentages
     core_label_width = len(f"Core {len(cpu_percentages) - 1}")
     max_bar_length = max(len(create_cpu_usage_bar(p).rstrip()) for p in cpu_percentages)
-    max_percentage_width = max(len(f"{p:6.1f}%") for p in cpu_percentages)
+    max_percentage_width = max(len(f"{p:6.2f}%") for p in cpu_percentages)
 
     # Total column width (bar + percentage + spacing)
     column_width = max_bar_length + max_percentage_width + 5  # Extra space for spacing and formatting
@@ -134,8 +134,8 @@ def display_user_usage():
     print(f"{USER_COLOR}=== Cumulative User CPU, Memory Usage, and Process Count ==={RESET_COLOR}")
 
     # Define thresholds
-    cpu_threshold = 0.001  # CPU usage threshold in percent
-    memory_threshold = 0.05  # Memory usage threshold in percent
+    cpu_threshold = 0.01  # CPU usage threshold in percent
+    memory_threshold = 0.01  # Memory usage threshold in percent
 
     # Dictionary to store cumulative CPU, memory usage, and process count for each user
     user_usage = defaultdict(lambda: {'cpu': 0.0, 'memory': 0.0, 'processes': 0})
@@ -162,7 +162,7 @@ def display_user_usage():
     filtered_user_data = [
         {
             'Username': user,
-            'CPU Usage (%)': f"{get_usage_color((usage['cpu'] / num_cpus))}{(usage['cpu'] / num_cpus):.3f}{RESET_COLOR}",
+            'CPU Usage (%)': f"{get_usage_color((usage['cpu'] / num_cpus))}{(usage['cpu'] / num_cpus):.2f}{RESET_COLOR}",
             'Memory Usage (%)': f"{get_usage_color(usage['memory'])}{usage['memory']:.2f}{RESET_COLOR}",
             'Process Count': usage['processes']
         }
