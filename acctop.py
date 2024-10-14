@@ -127,8 +127,9 @@ def display_cpu_usage_in_columns():
                 row_data.append(" " * column_width)  # Add empty string to fill the columns
             print(row_format.format(*row_data))
             row_data = []  # Reset for the next row
-
-    print(f"Overall CPU Usage: {get_usage_color(psutil.cpu_percent())}%")
+    percentage = psutil.cpu_percent()
+    color = get_usage_color(percentage)
+    print(f"Overall CPU Usage: {color}{percentage}%{RESET_COLOR}")
     print("")
 
 def display_user_usage():
