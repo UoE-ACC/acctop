@@ -144,6 +144,8 @@ def display_cpu_usage_in_columns():
     max_bar_length = max(len(create_cpu_usage_bar(p).rstrip()) for p in cpu_percentages)
     max_percentage_width = max(len(f"{p:6.2f}%") for p in cpu_percentages)
 
+    print(core_label_width, core_number_width, core_joined_label_width, max_bar_length, max_percentage_width)
+
     # Total column width (bar + percentage + spacing)
     column_width = core_joined_label_width + max_bar_length + max_percentage_width  # Extra space for spacing and formatting
 
