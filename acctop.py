@@ -5,14 +5,14 @@ from collections import defaultdict
 from tabulate import tabulate
 
 # ANSI escape codes for colors
-HEADER_COLOR = "\033[1;34m"  # Bold Blue
-CPU_COLOR = "\033[1;35m"# Bold Magenta"\033[1;32m"  # Bold Green
-MEMORY_COLOR = "\033[1;35m"# Bold Magenta"\033[1;32m"  # Bold Green "\033[1;33m"  # Bold Yellow
-DISK_COLOR = "\033[1;31m"  # Bold Red
-NETWORK_COLOR = "\033[1;35m"  # Bold Magenta
-USER_COLOR = "\033[1;36m"  # Bold Cyan
-LOAD_COLOR = "\033[1;37m"  # Bold White
-RESET_COLOR = "\033[0m"  # Reset to default
+HEADER_COLOR    = "\033[1;34m"  # Bold Blue
+CPU_COLOR       = "\033[1;35m"  # Bold Magenta"
+MEMORY_COLOR    = "\033[1;35m"  # Bold Magenta"
+DISK_COLOR      = "\033[1;35m"  # Bold Magenta"
+NETWORK_COLOR   = "\033[1;35m"  # Bold Magenta
+USER_COLOR      = "\033[1;35m"  # Bold Magenta"
+LOAD_COLOR      = "\033[1;35m"  # Bold Magenta"
+RESET_COLOR     = "\033[0m"     # Reset to default
 
 # Additional ANSI escape codes for CPU and memory usage bars
 GREEN = "\033[1;32m"
