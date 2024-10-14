@@ -222,23 +222,24 @@ def display_network_usage():
     print(f"{NETWORK_COLOR}=== Network Usage ==={RESET_COLOR}")
     net_io = psutil.net_io_counters(pernic=True)
 
-    # Determine the width of each column
-    iface_width = max(len(iface) for iface in net_io.keys()) + 2
-    max_megabytes_sent_len =   len(str(max(stats.bytes_sent / (1024 ** 2) for stats in net_io.values())))
-    max_megabytes_recv_len =   len(str(max(stats.bytes_recv / (1024 ** 2) for stats in net_io.values())))
-    max_packets_sent_len = len(str(max(stats.packets_sent for stats in net_io.values())))
-    max_packets_recv_len = len(str(max(stats.packets_recv for stats in net_io.values())))
-    print(max_megabytes_sent_len, max_megabytes_recv_len, max_packets_sent_len, max_packets_recv_len)
-    # input()
-    # recv_width = 20
-    # packets_sent_width = 15
-    # packets_recv_width = 15
-
+    # Column titles
     coltitle_interface = "Interface"
     coltitle_megabytes_sent = "Bytes Sent (MB)"
     coltitle_megabytes_recv = "Bytes Recv (MB)"
     coltitle_packets_sent = "Packets Sent"
     coltitle_packets_recv = "Packets Recv"
+
+    # Determine the width of each column
+    iface_width = max(max(len(iface) for iface in net_io.keys()), len(coltitle_interface)) + 2
+    max_megabytes_sent_len = max(len(coltitle_megabytes_sent), len(str(max(stats.bytes_sent / (1024 ** 2) for stats in net_io.values()))))
+    max_megabytes_recv_len = max(len(coltitle_megabytes_recv), len(str(max(stats.bytes_recv / (1024 ** 2) for stats in net_io.values()))))
+    max_packets_sent_len = max(len(coltitle_packets_sent), len(str(max(stats.packets_sent for stats in net_io.values()))))
+    max_packets_recv_len = max(len(coltitle_packets_recv), len(str(max(stats.packets_recv for stats in net_io.values()))))
+    print(max_megabytes_sent_len, max_megabytes_recv_len, max_packets_sent_len, max_packets_recv_len)
+    # input()
+    # recv_width = 20
+    # packets_sent_width = 15
+    # packets_recv_width = 15
 
     # Header row with colored titles
     header = (f"{HEADER_COLOR}{coltitle_interface.ljust(iface_width)} | "
