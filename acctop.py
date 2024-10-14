@@ -247,10 +247,10 @@ def display_network_usage():
     # Data rows
     for interface, stats in net_io.items():
         print(f"{interface.ljust(iface_width)} | "
-              f"{int(stats.bytes_sent / (1024 ** 2))} MB".rjust(sent_width) + " | "
-              f"{int(stats.bytes_recv / (1024 ** 2))} MB".rjust(recv_width) + " | "
-              f"{stats.packets_sent}".rjust(packets_sent_width) + " | "
-              f"{stats.packets_recv}".rjust(packets_recv_width))
+              f"{int(stats.bytes_sent / (1024 ** 2))} MB".rjust(max_megabytes_sent_len) + " | "
+              f"{int(stats.bytes_recv / (1024 ** 2))} MB".rjust(max_megabytes_recv_len) + " | "
+              f"{stats.packets_sent}".rjust(max_packets_sent_len) + " | "
+              f"{stats.packets_recv}".rjust(max_packets_recv_len))
     print("")
 
 def display_load_average():
