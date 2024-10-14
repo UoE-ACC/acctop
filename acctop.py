@@ -7,9 +7,9 @@ Features:
 - Memory Usage: Shows total, used, and available memory with a colored usage bar.
 - CPU Usage: Dynamically adjusts the number of columns based on terminal width and displays per-core CPU usage with colored bars.
 - User Usage: Aggregates CPU and memory usage by user and displays the process count for each user.
-- Network Usage: (Commented out) Displays network statistics including bytes sent/received and packets sent/received per network interface.
-- Load Average: (Commented out) Shows the system load average for the past 1, 5, and 15 minutes.
-- System Info: (Commented out) Displays system uptime and kernel version.
+- Network Usage: (Optional) Displays network statistics including bytes sent/received and packets sent/received per network interface.
+- Load Average: (Optional) Shows the system load average for the past 1, 5, and 15 minutes.
+- System Info: (Optional) Displays system uptime and kernel version.
 
 The script uses ANSI escape codes to add color to the terminal output, making it easier to read and interpret the data.
 
@@ -27,16 +27,18 @@ Functions:
 - display_load_average(): Displays the system load average for the past 1, 5, and 15 minutes.
 - display_system_info(): Displays system uptime and kernel version.
 - clear_console(): Clears the terminal screen.
-- main(): Main loop that updates the display every 2.5 seconds.
+- parse_arguments(): Parses command-line arguments for optional features and update interval.
+- main(): Main loop that updates the display based on the specified interval and optional features.
 
 Usage:
-Run the script in a terminal to start real-time monitoring. Press Ctrl+C to exit.
+Run the script in a terminal to start real-time monitoring. Use command-line arguments to enable optional features and set the update interval. Press Ctrl+C to exit.
 """
 import os
 import psutil
 import time
 from collections import defaultdict
 from tabulate import tabulate
+import argparse
 
 # ANSI escape codes for colors
 HEADER_COLOR    = "\033[1;34m"  # Bold Blue
@@ -281,3 +283,32 @@ def main():
 
 if __name__ == "__main__":
     main()
+    def parse_arguments():
+        parser = argparse.ArgumentParser(description="Real-Time System Resource Monitoring Tool")
+        parser.add_argument('--interval', type=float, default=2.5, help='Update interval in seconds (default: 2.5)')
+        parser.add_argument('--show-network', action='store_true', help='Display network usage')
+        parser.add_argument('--show-load', action='store_true', help='Display load average')
+        parser.add_argument('--show-system', action='store_true', help='Display system info')
+        return parser.parse_args()
+
+    if __name__ == "__main__":
+        args = parse_arguments()
+        try:
+            while True:
+                clear_console()  # Clear the screen
+                print(f"{HEADER_COLOR}=== Real-Time System Resource Usage for {os.uname().nodename.capitalize()} ==={RESET_COLOR}")
+                display_disk_usage()  # Disk usage with a bar
+                display_memory_usage()  # Memory usage with a bar
+                display_cpu_usage_in_columns()  # Dynamically set number of columns based on terminal width
+                display_user_usage()  # Cumulative user usage with CPU normalized by number of cores
+                if args.show_network:
+                    display_network_usage()  # Network usage with aligned columns and colored headers
+                if args.show_load:
+                    display_load_average()  # Load average
+                if args.show_system:
+                    display_system_info()  # System uptime and kernel version
+                print(f"{HEADER_COLOR}========================================{RESET_COLOR}")
+                print('Press ctrl+c to exit...')
+                time.sleep(args.interval)  # Update based on the interval argument
+        except KeyboardInterrupt:
+            print("\nExiting real-time monitoring.")
