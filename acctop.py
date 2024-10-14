@@ -225,9 +225,9 @@ def display_network_usage():
     # Column titles
     coltitle_interface = "Interface"
     coltitle_megabytes_sent = "Bytes Sent (MB)"
-    coltitle_megabytes_recv = "Bytes Recv (MB)"
+    coltitle_megabytes_recv = "Bytes Received (MB)"
     coltitle_packets_sent = "Packets Sent"
-    coltitle_packets_recv = "Packets Recv"
+    coltitle_packets_recv = "Packets Received"
 
     # Determine the width of each column
     iface_width = max(max(len(iface) for iface in net_io.keys()), len(coltitle_interface)) + 2
