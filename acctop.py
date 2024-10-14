@@ -71,7 +71,7 @@ def display_memory_usage():
     print(f"Total: {f'{memory_info.total / (1024 ** 3):.2f} GB'} | "
           f"Used: {f'{memory_info.used / (1024 ** 3):.2f} GB'} | "
           f"Available: {f'{memory_info.available / (1024 ** 3):.2f} GB'} | "
-          f"{f'{create_memory_usage_bar(memory_info.percent)}%'}")
+          f"{f'{create_memory_usage_bar(memory_info.percent)}'}")
 
     # Print bars
     # print(f"{create_memory_usage_bar(memory_info.percent)}")
