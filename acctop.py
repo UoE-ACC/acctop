@@ -245,6 +245,7 @@ def display_network_usage():
               f"{stats.bytes_recv / (1024 ** 2):.2f} MB".rjust(recv_width) + " | "
               f"{stats.packets_sent}".rjust(packets_sent_width) + " | "
               f"{stats.packets_recv}".rjust(packets_recv_width))
+    print("")
 
 def display_load_average():
     print(f"{LOAD_COLOR}=== Load Average ==={RESET_COLOR}")
@@ -252,6 +253,7 @@ def display_load_average():
     print(f"1 min: {load_avg[0]:.2f} | "
           f"5 min: {load_avg[1]:.2f} | "
           f"15 min: {load_avg[2]:.2f}")
+    print("")
 
 def display_system_info():
     print(f"{INFO_COLOR}=== System Info ==={RESET_COLOR}")
@@ -260,6 +262,7 @@ def display_system_info():
     kernel_version = os.uname().release
     print(f"Uptime: {uptime}")
     print(f"Kernel Version: {kernel_version}")
+    print("")
 
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
