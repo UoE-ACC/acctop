@@ -261,9 +261,7 @@ def main():
     try:
         while True:
             clear_console()  # Clear the screen
-            print(f"{HEADER_COLOR}=== Real-Time System Resource Usage ==={RESET_COLOR}")
-            system_name = os.uname().nodename
-            print(f"System Name: {system_name}")
+            print(f"{HEADER_COLOR}=== Real-Time System Resource Usage for {os.uname().nodename} ==={RESET_COLOR}")
             display_disk_usage()  # Disk usage with a bar
             display_memory_usage()  # Memory usage with a bar
             display_cpu_usage_in_columns()  # Dynamically set number of columns based on terminal width
