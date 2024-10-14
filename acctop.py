@@ -237,10 +237,10 @@ def display_network_usage():
 
     # Header row with colored titles
     header = (f"{HEADER_COLOR}{'Interface'.ljust(iface_width)} | "
-              f"{'Bytes Sent (MB)'.rjust(sent_width)} | "
-              f"{'Bytes Received (MB)'.rjust(recv_width)} | "
-              f"{'Packets Sent'.rjust(packets_sent_width)} | "
-              f"{'Packets Received'.rjust(packets_recv_width)}{RESET_COLOR}")
+              f"{'Bytes Sent (MB)'.rjust(max_megabytes_sent_len)} | "
+              f"{'Bytes Received (MB)'.rjust(max_megabytes_recv_len)} | "
+              f"{'Packets Sent'.rjust(max_packets_sent_len)} | "
+              f"{'Packets Received'.rjust(max_packets_recv_len)}{RESET_COLOR}")
     print(header)
     print("-" * len(header))
 
