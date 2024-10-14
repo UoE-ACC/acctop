@@ -164,7 +164,6 @@ def display_cpu_usage_in_columns():
                 row_data.append(" " * column_width)  # Add empty string to fill the columns
             print(row_format.format(*row_data))
             row_data = []  # Reset for the next row
-    print(f"Overall CPU Usage: {get_usage_color(psutil.cpu_percent())}{psutil.cpu_percent():.4f}%{RESET_COLOR}")
     average_cpu_usage = sum(cpu_percentages) / len(cpu_percentages)
     print(f"Average CPU Usage: {get_usage_color(average_cpu_usage)}{average_cpu_usage:.2f}%{RESET_COLOR}")
     print("")
