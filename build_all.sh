@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "=============================="
+echo "Building the acctop command"
+echo "=============================="
+
 # Print out command arguments during execution
 set -x
 
@@ -31,15 +35,15 @@ mv dist/acctop "$HOME/.bin/acctop"
 for shell_config in "$HOME/.bashrc" "$HOME/.zshrc"; do
     if [ -f "$shell_config" ]; then
         echo 'export PATH="$PATH:$HOME/.bin"' >> "$shell_config"
-    fi
-done
-
-# Add .bin directory to PATH in shell configuration files (bashrc and zshrc for common ones)
-for shell_config in "$HOME/.bashrc" "$HOME/.zshrc"; do
-    if [ -f "$shell_config" ]; then
         source "$shell_config"
     fi
 done
 
+
 # Clean up the build directory
 rm -rf build/ dist/ __pycache__/ acctop.spec
+
+echo "================================================================"
+echo "Build process completed"
+echo "to use: try the command acctop from anywhere on the command line"
+echo "================================================================"
