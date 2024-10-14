@@ -225,11 +225,11 @@ def display_network_usage():
     # Determine the width of each column
     iface_width = max(len(iface) for iface in net_io.keys()) + 2
     sent_width = 20
-    max_bytes_sent_len =   len(str(max(stats.bytes_sent for stats in net_io.values())))
-    max_bytes_recv_len =   len(str(max(stats.bytes_recv for stats in net_io.values())))
+    max_megabytes_sent_len =   len(str(max(stats.bytes_sent / (1024 ** 2) for stats in net_io.values())))
+    max_megabytes_recv_len =   len(str(max(stats.bytes_recv / (1024 ** 2) for stats in net_io.values())))
     max_packets_sent_len = len(str(max(stats.packets_sent for stats in net_io.values())))
     max_packets_recv_len = len(str(max(stats.packets_recv for stats in net_io.values())))
-    print(max_bytes_sent_len, max_bytes_recv_len, max_packets_sent_len, max_packets_recv_len)
+    print(max_megabytes_sent_len, max_megabytes_recv_len, max_packets_sent_len, max_packets_recv_len)
     input()
     recv_width = 20
     packets_sent_width = 15
@@ -237,8 +237,8 @@ def display_network_usage():
 
     # Header row with colored titles
     header = (f"{HEADER_COLOR}{'Interface'.ljust(iface_width)} | "
-              f"{'Bytes Sent'.rjust(sent_width)} | "
-              f"{'Bytes Received'.rjust(recv_width)} | "
+              f"{'Bytes Sent (MB)'.rjust(sent_width)} | "
+              f"{'Bytes Received (MB)'.rjust(recv_width)} | "
               f"{'Packets Sent'.rjust(packets_sent_width)} | "
               f"{'Packets Received'.rjust(packets_recv_width)}{RESET_COLOR}")
     print(header)
