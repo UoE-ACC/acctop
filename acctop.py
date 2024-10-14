@@ -20,12 +20,12 @@ Functions:
 - create_disk_usage_bar(percentage, bar_length=30): Returns a string representing an ASCII bar chart of disk usage with color.
 - display_disk_usage(): Displays disk usage statistics with a colored usage bar.
 - display_memory_usage(): Displays memory usage statistics with a colored usage bar.
-- get_cpu_columns(): Determines the number of columns to use for CPU usage display based on terminal width.
+- get_cpu_columns(column_width): Determines the number of columns to use for CPU usage display based on terminal width.
 - display_cpu_usage_in_columns(): Displays per-core CPU usage in dynamically adjusted columns with colored bars.
 - display_user_usage(): Displays cumulative CPU, memory usage, and process count for each user.
-- display_network_usage(): (Commented out) Displays network usage statistics with aligned columns and colored headers.
-- display_load_average(): (Commented out) Displays the system load average for the past 1, 5, and 15 minutes.
-- display_system_info(): (Commented out) Displays system uptime and kernel version.
+- display_network_usage(): Displays network usage statistics with aligned columns and colored headers.
+- display_load_average(): Displays the system load average for the past 1, 5, and 15 minutes.
+- display_system_info(): Displays system uptime and kernel version.
 - clear_console(): Clears the terminal screen.
 - main(): Main loop that updates the display every 2.5 seconds.
 
@@ -186,7 +186,7 @@ def display_user_usage():
             # Get process information
             proc_info = proc.info
             username = proc_info['username']
-            if username:  # Ensure the process has a valid username
+            if username and username != 'root':  # Ensure the process has a valid username and is not root
                 # Accumulate the CPU and memory usage for each user
                 user_data = user_usage[username]
                 user_data['cpu'] += proc_info['cpu_percent']
