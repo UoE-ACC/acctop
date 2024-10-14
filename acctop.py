@@ -112,16 +112,16 @@ def display_memory_usage():
     # print(f"{create_memory_usage_bar(swap_info.percent)}")
     print("")
 
-def get_cpu_columns():
+def get_cpu_columns(column_width):
     try:
         terminal_width = os.get_terminal_size().columns
-        if terminal_width < 50:
+        if terminal_width < column_width*2:
             return 1  # Narrow terminal, use 1 column
-        elif 50 <= terminal_width < 100:
+        elif terminal_width < column_width*3:
             return 2  # Medium terminal, use 2 columns
-        elif 100 <= terminal_width < 150:
+        elif terminal_width < column_width*4:
             return 3  # Wide terminal, use 3 columns
-        elif 150 <= terminal_width < 200:
+        elif terminal_width < column_width*5:
             return 4  # Extra wide terminal, use 4 columns
         else:
             return 5  # Extra extra wide terminal, use 5 columns
@@ -133,14 +133,8 @@ def display_cpu_usage_in_columns():
 
     cpu_percentages = psutil.cpu_percent(percpu=True)
 
-    # Determine the number of columns based on terminal width
-    columns = get_cpu_columns()
-
     # Determine the width needed for the core labels, bars, and percentages
     num_cores = len(cpu_percentages)
-    # print(num_cores)
-    # input()
-
 
     core_label_width = len(f"Core {num_cores}")-5
     max_bar_length = max(len(create_cpu_usage_bar(p).rstrip()) for p in cpu_percentages)
@@ -148,6 +142,9 @@ def display_cpu_usage_in_columns():
 
     # Total column width (bar + percentage + spacing)
     column_width = core_label_width + max_bar_length + max_percentage_width  # Extra space for spacing and formatting
+
+    # Determine the number of columns based on terminal width and the column display width
+    columns = get_cpu_columns(column_width)
 
     # Prepare rows for display based on the number of columns
     row_format = "".join([f"{{:<{column_width}}}" for _ in range(columns)])
