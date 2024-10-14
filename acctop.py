@@ -234,7 +234,7 @@ def main():
             display_user_usage()  # Cumulative user usage with CPU normalized by number of cores
             # display_network_usage()  # Network usage with aligned columns and colored headers
             # display_load_average()  # Load average
-            display_system_info()  # System uptime and kernel version
+            # display_system_info()  # System uptime and kernel version
             print(f"{HEADER_COLOR}========================================{RESET_COLOR}")
             time.sleep(2.5)  # Update every 2.5 seconds
     except KeyboardInterrupt:
