@@ -129,7 +129,7 @@ def get_cpu_columns(column_width):
         return 2  # Default to 2 columns if terminal size cannot be determined
 
 def display_cpu_usage_in_columns():
-    print(f"{CPU_COLOR}=== CPU Usage (Dynamic Columns) ==={RESET_COLOR}")
+    print(f"{CPU_COLOR}=== CPU Usage ==={RESET_COLOR}")
 
     cpu_percentages = psutil.cpu_percent(percpu=True)
 
