@@ -59,10 +59,6 @@ for shell_config in "$HOME/.bashrc" "$HOME/.zshrc"; do
     fi
 done
 
-# Source the .zshrc file to update the PATH
-# echo "=============================="
-# echo "Sourcing the .zshrc file to update the PATH"
-# source "$HOME/.zshrc"
 
 
 # Clean up the build directory

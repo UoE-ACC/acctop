@@ -32,3 +32,13 @@ acctop
 
 ### Example Output
 ![example_output.png](example_output.png)
+
+## Warnings
+This tool will append to your `.bashrc` and `.zshrc` shells if they exist.
+The shell `.zshrc` will take priority and be reloaded last.
+
+You may need to append the following line if you are using an alternative shell:
+```
+export PATH="$PATH:$HOME/.bin"
+```
+Then reload your shell.
