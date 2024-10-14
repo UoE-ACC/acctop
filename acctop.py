@@ -225,11 +225,11 @@ def display_network_usage():
     # Determine the width of each column
     iface_width = max(len(iface) for iface in net_io.keys()) + 2
     sent_width = 20
-    max_bytes_sent = max(stats.bytes_sent for stats in net_io.values())
-    max_bytes_recv = max(stats.bytes_recv for stats in net_io.values())
-    max_packets_sent = max(stats.packets_sent for stats in net_io.values())
-    max_packets_recv = max(stats.packets_recv for stats in net_io.values())
-    print(max_bytes_sent, max_bytes_recv, max_packets_sent, max_packets_recv)
+    max_bytes_sent_len = len(max(stats.bytes_sent for stats in net_io.values()))
+    max_bytes_recv_len = len(max(stats.bytes_recv for stats in net_io.values()))
+    max_packets_sent_len = len(max(stats.packets_sent for stats in net_io.values()))
+    max_packets_recv_len = len(max(stats.packets_recv for stats in net_io.values()))
+    print(max_bytes_sent_len, max_bytes_recv_len, max_packets_sent_len, max_packets_recv_len)
     input()
     recv_width = 20
     packets_sent_width = 15
