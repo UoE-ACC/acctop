@@ -1,3 +1,37 @@
+"""
+This script provides a real-time system resource monitoring tool that displays various system metrics in the terminal.
+It uses the `psutil` library to gather system information and the `tabulate` library to format the output in a readable manner.
+
+Features:
+- Disk Usage: Displays total, used, and free disk space along with a colored usage bar.
+- Memory Usage: Shows total, used, and available memory with a colored usage bar.
+- CPU Usage: Dynamically adjusts the number of columns based on terminal width and displays per-core CPU usage with colored bars.
+- User Usage: Aggregates CPU and memory usage by user and displays the process count for each user.
+- Network Usage: (Commented out) Displays network statistics including bytes sent/received and packets sent/received per network interface.
+- Load Average: (Commented out) Shows the system load average for the past 1, 5, and 15 minutes.
+- System Info: (Commented out) Displays system uptime and kernel version.
+
+The script uses ANSI escape codes to add color to the terminal output, making it easier to read and interpret the data.
+
+Functions:
+- get_usage_color(percentage): Returns an ANSI color code based on the CPU usage percentage.
+- create_cpu_usage_bar(percentage, bar_length=10): Returns a string representing an ASCII bar chart of CPU usage with color.
+- create_memory_usage_bar(percentage, bar_length=30): Returns a string representing an ASCII bar chart of memory usage with color.
+- create_disk_usage_bar(percentage, bar_length=30): Returns a string representing an ASCII bar chart of disk usage with color.
+- display_disk_usage(): Displays disk usage statistics with a colored usage bar.
+- display_memory_usage(): Displays memory usage statistics with a colored usage bar.
+- get_cpu_columns(): Determines the number of columns to use for CPU usage display based on terminal width.
+- display_cpu_usage_in_columns(): Displays per-core CPU usage in dynamically adjusted columns with colored bars.
+- display_user_usage(): Displays cumulative CPU, memory usage, and process count for each user.
+- display_network_usage(): (Commented out) Displays network usage statistics with aligned columns and colored headers.
+- display_load_average(): (Commented out) Displays the system load average for the past 1, 5, and 15 minutes.
+- display_system_info(): (Commented out) Displays system uptime and kernel version.
+- clear_console(): Clears the terminal screen.
+- main(): Main loop that updates the display every 2.5 seconds.
+
+Usage:
+Run the script in a terminal to start real-time monitoring. Press Ctrl+C to exit.
+"""
 import os
 import psutil
 import time
@@ -236,6 +270,7 @@ def main():
             # display_load_average()  # Load average
             # display_system_info()  # System uptime and kernel version
             print(f"{HEADER_COLOR}========================================{RESET_COLOR}")
+            print('Press ctrl+c to exit...')
             time.sleep(2.5)  # Update every 2.5 seconds
     except KeyboardInterrupt:
         print("\nExiting real-time monitoring.")
