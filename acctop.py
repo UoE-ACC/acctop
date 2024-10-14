@@ -162,8 +162,8 @@ def display_user_usage():
     filtered_user_data = [
         {
             'Username': user,
-            'CPU Usage (%)': f"{get_usage_color((usage['cpu'] / num_cpus))}{(usage['cpu'] / num_cpus):.6f}{RESET_COLOR}",
-            'Memory Usage (%)': f"{get_usage_color(usage['memory'])}{usage['memory']:.6f}{RESET_COLOR}",
+            'CPU Usage (%)': f"{get_usage_color((usage['cpu'] / num_cpus))}{(usage['cpu'] / num_cpus):.3f}{RESET_COLOR}",
+            'Memory Usage (%)': f"{get_usage_color(usage['memory'])}{usage['memory']:.2f}{RESET_COLOR}",
             'Process Count': usage['processes']
         }
         for user, usage in user_usage.items()
