@@ -115,6 +115,7 @@ def display_memory_usage():
 def get_cpu_columns(column_width):
     try:
         terminal_width = os.get_terminal_size().columns
+        print(terminal_width, column_width)
         if terminal_width < column_width*2:
             return 1  # Narrow terminal, use 1 column
         elif terminal_width < column_width*3:
