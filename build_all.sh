@@ -33,9 +33,10 @@ mv dist/acctop "$HOME/.bin/acctop"
 
 # Add .bin directory to PATH in shell configuration files (bashrc and zshrc for common ones)
 for shell_config in "$HOME/.bashrc" "$HOME/.zshrc"; do
+    echo "Adding .bin directory to PATH in $shell_config"
     if [ -f "$shell_config" ]; then
         echo 'export PATH="$PATH:$HOME/.bin"' >> "$shell_config"
-        source "$shell_config"
+        echo 'source "$shell_config"'
     fi
 done
 
