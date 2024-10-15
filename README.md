@@ -10,7 +10,7 @@ To install the command, there are two options:
 
 This installs the command globally, by putting it in your `~/.bin` directory.
 
-```
+```[bash]
 ./build_all.sh
 ```
 
@@ -25,7 +25,7 @@ You will need to handle moving this to a directory on your `PATH`, or just alway
 
 To run the acctop tool, use the following command (from anywhere if you have installed globally):
 
-```
+```[bash]
 acctop
 ```
 
@@ -49,7 +49,7 @@ The shell `.zshrc` will take priority and be reloaded last.
 
 You may need to append the following line if you are using an alternative shell:
 
-```
+```[text]
 export PATH="$PATH:$HOME/.bin"
 ```
 
