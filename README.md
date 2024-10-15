@@ -4,17 +4,23 @@ A python-enhanced replacement for the 'top' inbuild linux command, for usage on 
 
 ## Installation
 
-To install the command, run:
+To install the command, there are two options:
 
+### Option 1
+
+This installs the command globally, by putting it in your `~/.bin` directory.
 ```
 ./build_all.sh
 ```
+This will build the tool, move it to `~/.bin` (or create this directory if it doesn't exist), and add `~/.bin` to your `PATH`.
 
-This should install the command globally, by putting it in your `~/.bin` directory.
+### Option 2
 
+This creates the executable `acctop` in the `dist` directory.
+You will need to handle moving this to a directory on your `PATH`, or just always execute in-place.
 
 ## Usage
-To run the acctop tool, use the following command (from anywhere):
+To run the acctop tool, use the following command (from anywhere if you have installed globally):
 ```
 acctop
 ```
