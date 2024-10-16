@@ -368,14 +368,14 @@ def display_disk_io():
 
     # Determine the width of each column
     disk_width = max(max(len(disk) for disk in disk_io.keys()), len(coltitle_disk))
-    max_readwrite_speed_len = len(coltitle_readwrite_speed)
+    max_readwrite_speed_len = len(coltitle_readwrite_speed)+4
 
     # Header row with colored titles
     header = (f"{HEADER_COLOR}{coltitle_disk.ljust(disk_width)} | "
               f"{coltitle_readwrite_speed.rjust(max_readwrite_speed_len)}{RESET_COLOR}")
     print(header)
     # Determine the width of the combined tables
-    combined_width = disk_width+max_readwrite_speed_len+4  # Adding some space between the tables
+    combined_width = disk_width+max_readwrite_speed_len  # Adding some space between the tables
     print("-" * combined_width)  # Separator line
 
     # Store previous I/O stats to calculate speed
