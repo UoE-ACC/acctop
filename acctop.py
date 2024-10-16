@@ -372,7 +372,7 @@ def display_disk_io():
     header = (f"{HEADER_COLOR}{coltitle_disk.ljust(disk_width)} | "
               f"{coltitle_readwrite_speed.rjust(max_readwrite_speed_len)}{RESET_COLOR}")
     print(header)
-    print("-" * len(header))  # Separator line
+    print("-" * len(header))-20  # Separator line
 
     # Store previous I/O stats to calculate speed
     prev_disk_io = psutil.disk_io_counters(perdisk=True)
@@ -381,7 +381,7 @@ def display_disk_io():
     curr_disk_io = psutil.disk_io_counters(perdisk=True)
 
     # Determine the width of the combined tables
-    combined_width = len(header) + 1  # Adding some space between the tables
+    combined_width = len(header)  # Adding some space between the tables
 
     # Get the console width
     terminal_width = os.get_terminal_size().columns
