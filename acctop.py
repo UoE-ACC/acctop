@@ -362,18 +362,15 @@ def display_disk_io():
 
     # Column titles
     coltitle_disk = "Disk"
-    coltitle_read_speed = "Read Speed (MB/s)"
-    coltitle_write_speed = "Write Speed (MB/s)"
+    coltitle_readwrite_speed = "Read/Write (MB/s)"
 
     # Determine the width of each column
     disk_width = max(max(len(disk) for disk in disk_io.keys()), len(coltitle_disk)) + 2
-    max_read_speed_len = len(coltitle_read_speed)
-    max_write_speed_len = len(coltitle_write_speed)
+    max_readwrite_speed_len = max(len(coltitle_readwrite_speed))
 
     # Header row with colored titles
     header = (f"{HEADER_COLOR}{coltitle_disk.ljust(disk_width)} | "
-              f"{coltitle_read_speed.rjust(max_read_speed_len)} | "
-              f"{coltitle_write_speed.rjust(max_write_speed_len)}{RESET_COLOR}")
+              f"{coltitle_readwrite_speed.rjust(max_readwrite_speed_len)}{RESET_COLOR}")
     print(header)
     print("-" * len(header))  # Separator line
 
@@ -389,8 +386,7 @@ def display_disk_io():
         read_speed = (1.0/poll_interval)*(stats.read_bytes - prev_stats.read_bytes) / (1024 ** 2)  # MB/s
         write_speed = (1.0/poll_interval)*(stats.write_bytes - prev_stats.write_bytes) / (1024 ** 2)  # MB/s
         print(f"{disk.ljust(disk_width)} | "
-              f"{str(f'{read_speed:.2f}').rjust(max_read_speed_len)} | "
-              f"{str(f'{write_speed:.2f}').rjust(max_write_speed_len)}")
+              f"{str(f'{read_speed:.2f} / {write_speed:.2f}').rjust(coltitle_readwrite_speed)}")
     print("")
 
 def clear_console():
