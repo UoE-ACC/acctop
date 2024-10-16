@@ -383,7 +383,7 @@ def display_disk_io():
     # Determine the width of the combined tables
     combined_width = len(header) * 4 + 15  # Adding some space between the tables
 
-    N = 4
+    N = 2
     # Data rows
     tables = [[] for _ in range(N)]  # Create 4 empty tables
     for i, (disk, stats) in enumerate(curr_disk_io.items()):
