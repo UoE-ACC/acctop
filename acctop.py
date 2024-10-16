@@ -381,41 +381,38 @@ def display_disk_io():
     curr_disk_io = psutil.disk_io_counters(perdisk=True)
 
     # Data rows
-    left_table = []
-    right_table = []
+    tables = [[] for _ in range(get_cpu_columns(len(header)))]  # Create N tables based on the number of columns
     for i, (disk, stats) in enumerate(curr_disk_io.items()):
         prev_stats = prev_disk_io[disk]
         read_speed = (1.0 / poll_interval) * (stats.read_bytes - prev_stats.read_bytes) / (1024 ** 2)  # MB/s
         write_speed = (1.0 / poll_interval) * (stats.write_bytes - prev_stats.write_bytes) / (1024 ** 2)  # MB/s
         row = f"{disk.ljust(disk_width)} | {read_speed:.2f}/{write_speed:.2f}".rjust(max_readwrite_speed_len)
-        if i % 2 == 0:
-            left_table.append(row)
-        else:
-            right_table.append(row)
+        tables[i % len(tables)].append(row)
 
     # Determine the width of the combined tables
-    combined_width = len(header) * 2 + 5  # Adding some space between the tables
+    combined_width = len(header) * len(tables) + (5 * (len(tables) - 1))  # Adding some space between the tables
 
     # Check if the terminal width is sufficient to display tables side by side
     terminal_width = os.get_terminal_size().columns
     if terminal_width >= combined_width:
         # Print tables side by side
-        for left_row, right_row in zip(left_table, right_table):
-            print(f"{left_row}     {right_row}")
-        # If left_table has more rows than right_table, print the remaining rows
-        if len(left_table) > len(right_table):
-            for left_row in left_table[len(right_table):]:
-                print(left_row)
-        # If right_table has more rows than left_table, print the remaining rows
-        if len(right_table) > len(left_table):
-            for right_row in right_table[len(left_table):]:
-                print(" " * len(header) + "     " + right_row)
+        for rows in zip(*tables):
+            print("     ".join(rows))
+        # Print remaining rows if any table has more rows than others
+        max_rows = max(len(table) for table in tables)
+        for i in range(max_rows):
+            row_parts = []
+            for table in tables:
+                if i < len(table):
+                    row_parts.append(table[i])
+                else:
+                    row_parts.append(" " * len(header))
+            print("     ".join(row_parts))
     else:
         # Print tables one below the other
-        for row in left_table:
-            print(row)
-        for row in right_table:
-            print(row)
+        for table in tables:
+            for row in table:
+                print(row)
     print("")
 
 
