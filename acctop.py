@@ -424,7 +424,7 @@ def display_disk_io():
     #     for table in tables:
     #         for row in table:
     #             print(row)
-    print_tables_side_by_side(tables, 4)
+    print_tables_side_by_side(tables, 3)
     print("")
 
 
