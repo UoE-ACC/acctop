@@ -351,6 +351,39 @@ def display_system_info():
     print(f"Kernel Version: {kernel_version}")
     print("")
 
+def display_disk_io():
+    """
+    Display disk I/O statistics including read and write bytes for each disk.
+    """
+
+    print(f"{DISK_COLOR}=== Disk I/O ==={RESET_COLOR}")
+
+    disk_io = psutil.disk_io_counters(perdisk=True)
+
+    # Column titles
+    coltitle_disk = "Disk"
+    coltitle_read_bytes = "Read Bytes (MB)"
+    coltitle_write_bytes = "Write Bytes (MB)"
+
+    # Determine the width of each column
+    disk_width = max(max(len(disk) for disk in disk_io.keys()), len(coltitle_disk)) + 2
+    max_read_bytes_len = max(len(coltitle_read_bytes), len(str(max(stats.read_bytes / (1024 ** 2) for stats in disk_io.values()))))
+    max_write_bytes_len = max(len(coltitle_write_bytes), len(str(max(stats.write_bytes / (1024 ** 2) for stats in disk_io.values()))))
+
+    # Header row with colored titles
+    header = (f"{HEADER_COLOR}{coltitle_disk.ljust(disk_width)} | "
+                f"{coltitle_read_bytes.rjust(max_read_bytes_len)} | "
+                f"{coltitle_write_bytes.rjust(max_write_bytes_len)}{RESET_COLOR}")
+    print(header)
+    print("-" * len(header))  # Separator line
+
+    # Data rows
+    for disk, stats in disk_io.items():
+        print(f"{disk.ljust(disk_width)} | "
+                f"{str(int(stats.read_bytes / (1024 ** 2))).rjust(max_read_bytes_len)} | "
+                f"{str(int(stats.write_bytes / (1024 ** 2))).rjust(max_write_bytes_len)}")
+    print("")
+
 def clear_console():
     """
     Clears the console screen. Works on both Windows and Unix-like systems.
@@ -374,6 +407,7 @@ if __name__ == "__main__":
         parser.add_argument('--show-network', action='store_true', help='Display network usage')
         parser.add_argument('--show-load', action='store_true', help='Display load average')
         parser.add_argument('--show-system', action='store_true', help='Display system info')
+        parser.add_argument('--show-disk-io', action='store_true', help='Display disk I/O statistics')
         parser.add_argument('--show-all', action='store_true', help='Display all optional features')
         return parser.parse_args()
 
@@ -392,6 +426,8 @@ if __name__ == "__main__":
                 display_load_average()  # Load average
             if args.show_system or args.show_all:
                 display_system_info()  # System uptime and kernel version
+            if args.show_disk_io or args.show_all:
+                display_disk_io()
             print(f"{HEADER_COLOR}========================================{RESET_COLOR}")
             print('Press ctrl+c to exit...')
             time.sleep(args.interval)  # Update based on the interval argument
