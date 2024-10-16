@@ -366,7 +366,7 @@ def display_disk_io():
 
     # Determine the width of each column
     disk_width = max(max(len(disk) for disk in disk_io.keys()), len(coltitle_disk)) + 2
-    max_readwrite_speed_len = max(len(coltitle_readwrite_speed))
+    max_readwrite_speed_len = len(coltitle_readwrite_speed)
 
     # Header row with colored titles
     header = (f"{HEADER_COLOR}{coltitle_disk.ljust(disk_width)} | "
