@@ -380,20 +380,23 @@ def display_disk_io():
     time.sleep(poll_interval)  # Sleep for 1 second to calculate speed
     curr_disk_io = psutil.disk_io_counters(perdisk=True)
 
+    # Determine the width of the combined tables
+    combined_width = len(header) * 4 + 15  # Adding some space between the tables
+
+    N = 4
     # Data rows
-    tables = [[] for _ in range(4)]  # Create 4 empty tables
+    tables = [[] for _ in range(N)]  # Create 4 empty tables
     for i, (disk, stats) in enumerate(curr_disk_io.items()):
         prev_stats = prev_disk_io[disk]
         read_speed = (1.0 / poll_interval) * (stats.read_bytes - prev_stats.read_bytes) / (1024 ** 2)  # MB/s
         write_speed = (1.0 / poll_interval) * (stats.write_bytes - prev_stats.write_bytes) / (1024 ** 2)  # MB/s
         row = f"{disk.ljust(disk_width)} | {read_speed:.2f}/{write_speed:.2f}".rjust(max_readwrite_speed_len)
-        tables[i % 4].append(row)
+        tables[i % N].append(row)
 
-    # Determine the width of the combined tables
-    combined_width = len(header) * 4 + 15  # Adding some space between the tables
+
 
     # Function to print tables side by side
-    def print_tables_side_by_side(tables, n):
+    def print_tables_side_by_side(tables):
         max_len = max(len(table) for table in tables)
         for i in range(max_len):
             row_parts = []
@@ -406,25 +409,7 @@ def display_disk_io():
 
     # Check if the terminal width is sufficient to display tables side by side
     terminal_width = os.get_terminal_size().columns
-    # if terminal_width >= combined_width:
-    #     # Print tables side by side
-    #     print_tables_side_by_side(tables, 4)
-    # elif terminal_width >= combined_width * 3 / 4:
-    #     # Print 3 tables side by side
-    #     print_tables_side_by_side(tables[:3], 3)
-    #     for row in tables[3]:
-    #         print(row)
-    #     print_tables_side_by_side(tables[4], 3)
-    # elif terminal_width >= combined_width / 2:
-    #     # Print 2 tables side by side
-    #     print_tables_side_by_side(tables[:2], 2)
-    #     print_tables_side_by_side(tables[2:], 2)
-    # else:
-    #     # Print tables one below the other
-    #     for table in tables:
-    #         for row in table:
-    #             print(row)
-    print_tables_side_by_side(tables, 3)
+    print_tables_side_by_side(tables)
     print("")
 
 
