@@ -381,7 +381,7 @@ def display_disk_io():
     curr_disk_io = psutil.disk_io_counters(perdisk=True)
 
     # Determine the width of the combined tables
-    combined_width = len(header) + 15  # Adding some space between the tables
+    combined_width = len(header) + 1  # Adding some space between the tables
 
     # Get the console width
     terminal_width = os.get_terminal_size().columns
@@ -413,7 +413,7 @@ def display_disk_io():
                     row_parts.append(table[i])
                 else:
                     row_parts.append(" " * len(header))
-            print("     ".join(row_parts))
+            print(" ".join(row_parts))
 
     # Check if the terminal width is sufficient to display tables side by side
     terminal_width = os.get_terminal_size().columns
