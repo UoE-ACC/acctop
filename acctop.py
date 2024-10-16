@@ -356,8 +356,10 @@ def display_disk_io():
     Display live disk I/O statistics including read and write bytes for each disk.
     """
 
+    # Print header
     print(f"{DISK_COLOR}=== Disk I/O ==={RESET_COLOR}")
 
+    # Get disk I/O statistics
     disk_io = psutil.disk_io_counters(perdisk=True)
 
     # Column titles
@@ -376,27 +378,18 @@ def display_disk_io():
     combined_width = disk_width+max_readwrite_speed_len+4  # Adding some space between the tables
     print("-" * combined_width)  # Separator line
 
-    print(f"Combined width: {combined_width}")
-    print(disk_width)
-    print(max_readwrite_speed_len)
-
     # Store previous I/O stats to calculate speed
     prev_disk_io = psutil.disk_io_counters(perdisk=True)
     poll_interval = 0.01  # Polling interval in seconds
     time.sleep(poll_interval)  # Sleep for 1 second to calculate speed
     curr_disk_io = psutil.disk_io_counters(perdisk=True)
 
-
-
     # Get the console width
     terminal_width = os.get_terminal_size().columns
 
     # Check if the terminal width is sufficient to display tables side by side
-    print(f"Terminal width: {terminal_width}")
-    print(f"Combined width: {combined_width}")
     N = min(terminal_width // combined_width, 10)
     N = max(N, 1)  # Ensure at least 1 table is displayed
-    print(f"Number of tables: {N}")
 
     # Data rows
     tables = [[] for _ in range(N)]  # Create N empty tables
@@ -404,9 +397,8 @@ def display_disk_io():
         prev_stats = prev_disk_io[disk]
         read_speed = (1.0 / poll_interval) * (stats.read_bytes - prev_stats.read_bytes) / (1024 ** 2)  # MB/s
         write_speed = (1.0 / poll_interval) * (stats.write_bytes - prev_stats.write_bytes) / (1024 ** 2)  # MB/s
-        row = f"{disk.ljust(disk_width)} | {read_speed:.2f}/{write_speed:.2f}".rjust(max_readwrite_speed_len)
+        row = f"{disk.ljust(disk_width)} | {read_speed:.2f}/{write_speed:.2f}  ".rjust(max_readwrite_speed_len)
         tables[i % N].append(row)
-
 
     # Function to print tables side by side
     def print_tables_side_by_side(tables):
@@ -420,8 +412,7 @@ def display_disk_io():
                     row_parts.append(" " * len(header))
             print(" ".join(row_parts))
 
-    # Check if the terminal width is sufficient to display tables side by side
-    terminal_width = os.get_terminal_size().columns
+    # Print tables side by side
     print_tables_side_by_side(tables)
     print("")
 
