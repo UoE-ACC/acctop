@@ -395,6 +395,7 @@ def display_disk_io():
     # Check if the terminal width is sufficient to display tables side by side
     terminal_width = os.get_terminal_size().columns
     if terminal_width >= combined_width:
+        print('true')
         # Print tables side by side
         for rows in zip(*tables):
             print("     ".join(rows))
@@ -409,6 +410,7 @@ def display_disk_io():
                     row_parts.append(" " * len(header))
             print("     ".join(row_parts))
     else:
+        print('false')
         # Print tables one below the other
         for table in tables:
             for row in table:
