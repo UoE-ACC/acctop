@@ -379,8 +379,8 @@ def display_disk_io():
 
     # Store previous I/O stats to calculate speed
     prev_disk_io = psutil.disk_io_counters(perdisk=True)
-    poll_interval = 0.1  # Polling interval in seconds
-    time.sleep(0.1)  # Sleep for 1 second to calculate speed
+    poll_interval = 0.01  # Polling interval in seconds
+    time.sleep(poll_interval)  # Sleep for 1 second to calculate speed
     curr_disk_io = psutil.disk_io_counters(perdisk=True)
 
     # Data rows
