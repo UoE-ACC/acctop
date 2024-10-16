@@ -392,13 +392,8 @@ def display_disk_io():
     # Determine the width of the combined tables
     combined_width = len(header) * 4 + 15  # Adding some space between the tables
 
-    # Check if the terminal width is sufficient to display tables side by side
-    terminal_width = os.get_terminal_size().columns
-    if terminal_width >= combined_width:
-        # Print tables side by side
-        for rows in zip(*tables):
-            print("     ".join(rows))
-        # If any table has more rows than others, print the remaining rows
+    # Function to print tables side by side
+    def print_tables_side_by_side(tables, n):
         max_len = max(len(table) for table in tables)
         for i in range(max_len):
             row_parts = []
@@ -408,42 +403,28 @@ def display_disk_io():
                 else:
                     row_parts.append(" " * len(header))
             print("     ".join(row_parts))
-    elif terminal_width >= combined_width * 3 / 4:
-        # Print 3 tables side by side
-        for rows in zip(*tables[:3]):
-            print("     ".join(rows))
-        for row in tables[3]:
-            print(row)
-    elif terminal_width >= combined_width / 2:
-        # Print 2 tables side by side
-        for rows in zip(*tables[:2]):
-            print("     ".join(rows))
-        for rows in zip(*tables[2:]):
-            print("     ".join(rows))
-        # If any table has more rows than others, print the remaining rows
-        max_len = max(len(table) for table in tables[:2])
-        for i in range(max_len):
-            row_parts = []
-            for table in tables[:2]:
-                if i < len(table):
-                    row_parts.append(table[i])
-                else:
-                    row_parts.append(" " * len(header))
-            print("     ".join(row_parts))
-        max_len = max(len(table) for table in tables[2:])
-        for i in range(max_len):
-            row_parts = []
-            for table in tables[2:]:
-                if i < len(table):
-                    row_parts.append(table[i])
-                else:
-                    row_parts.append(" " * len(header))
-            print("     ".join(row_parts))
-    else:
-        # Print tables one below the other
-        for table in tables:
-            for row in table:
-                print(row)
+
+    # Check if the terminal width is sufficient to display tables side by side
+    terminal_width = os.get_terminal_size().columns
+    # if terminal_width >= combined_width:
+    #     # Print tables side by side
+    #     print_tables_side_by_side(tables, 4)
+    # elif terminal_width >= combined_width * 3 / 4:
+    #     # Print 3 tables side by side
+    #     print_tables_side_by_side(tables[:3], 3)
+    #     for row in tables[3]:
+    #         print(row)
+    #     print_tables_side_by_side(tables[4], 3)
+    # elif terminal_width >= combined_width / 2:
+    #     # Print 2 tables side by side
+    #     print_tables_side_by_side(tables[:2], 2)
+    #     print_tables_side_by_side(tables[2:], 2)
+    # else:
+    #     # Print tables one below the other
+    #     for table in tables:
+    #         for row in table:
+    #             print(row)
+    print_tables_side_by_side(tables, 4)
     print("")
 
 
