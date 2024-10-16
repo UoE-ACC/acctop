@@ -397,7 +397,7 @@ def display_disk_io():
         prev_stats = prev_disk_io[disk]
         read_speed = (1.0 / poll_interval) * (stats.read_bytes - prev_stats.read_bytes) / (1024 ** 2)  # MB/s
         write_speed = (1.0 / poll_interval) * (stats.write_bytes - prev_stats.write_bytes) / (1024 ** 2)  # MB/s
-        row = f"{disk.ljust(disk_width)} | {read_speed:.2f}/{write_speed:.2f}".rjust(max_readwrite_speed_len)
+        row = f"{disk.ljust(disk_width)} | {read_speed:.2f}/{write_speed:.2f}".ljust(max_readwrite_speed_len)
         tables[i % N].append(row)
 
     # Function to print tables side by side
