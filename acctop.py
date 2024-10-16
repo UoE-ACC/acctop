@@ -368,11 +368,11 @@ def display_disk_io():
 
     # Determine the width of each column
     disk_width = max(max(len(disk) for disk in disk_io.keys()), len(coltitle_disk))
-    max_readwrite_speed_len = len(coltitle_readwrite_speed)+4
+    max_readwrite_speed_len = len(coltitle_readwrite_speed)+8
 
     # Header row with colored titles
     header = (f"{HEADER_COLOR}{coltitle_disk.ljust(disk_width)} | "
-              f"{coltitle_readwrite_speed.rjust(max_readwrite_speed_len)}{RESET_COLOR}")
+              f"{coltitle_readwrite_speed.ljust(max_readwrite_speed_len)}{RESET_COLOR}")
     print(header)
     # Determine the width of the combined tables
     combined_width = disk_width+max_readwrite_speed_len  # Adding some space between the tables
@@ -397,7 +397,7 @@ def display_disk_io():
         prev_stats = prev_disk_io[disk]
         read_speed = (1.0 / poll_interval) * (stats.read_bytes - prev_stats.read_bytes) / (1024 ** 2)  # MB/s
         write_speed = (1.0 / poll_interval) * (stats.write_bytes - prev_stats.write_bytes) / (1024 ** 2)  # MB/s
-        row = f"{disk.ljust(disk_width)} | {read_speed:.2f}/{write_speed:.2f}  ".rjust(max_readwrite_speed_len)
+        row = f"{disk.ljust(disk_width)} | {read_speed:.2f}/{write_speed:.2f}".rjust(max_readwrite_speed_len)
         tables[i % N].append(row)
 
     # Function to print tables side by side
