@@ -372,7 +372,7 @@ def display_disk_io():
     header = (f"{HEADER_COLOR}{coltitle_disk.ljust(disk_width)} | "
               f"{coltitle_readwrite_speed.rjust(max_readwrite_speed_len)}{RESET_COLOR}")
     print(header)
-    print("-" * (len(header)-20) )  # Separator line
+    print("-" * (len(header)-10) )  # Separator line
 
     # Store previous I/O stats to calculate speed
     prev_disk_io = psutil.disk_io_counters(perdisk=True)
