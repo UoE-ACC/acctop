@@ -362,7 +362,7 @@ def display_disk_io():
 
     # Column titles
     coltitle_disk = "Disk"
-    coltitle_readwrite_speed = "Read/Write Speed (MB/s)"
+    coltitle_readwrite_speed = "Read/Write (MB/s)"
 
     # Determine the width of each column
     disk_width = max(max(len(disk) for disk in disk_io.keys()), len(coltitle_disk))
@@ -390,6 +390,7 @@ def display_disk_io():
     print(f"Terminal width: {terminal_width}")
     print(f"Combined width: {combined_width}")
     N = min(terminal_width // combined_width, 5)
+    N = max(N, 1)  # Ensure at least 1 table is displayed
     print(f"Number of tables: {N}")
 
     # Data rows
