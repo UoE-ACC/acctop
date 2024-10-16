@@ -381,27 +381,26 @@ def display_disk_io():
     curr_disk_io = psutil.disk_io_counters(perdisk=True)
 
     # Data rows
-    tables = [[] for _ in range(get_cpu_columns(len(header)))]  # Create N tables based on the number of columns
+    tables = [[] for _ in range(4)]  # Create 4 empty tables
     for i, (disk, stats) in enumerate(curr_disk_io.items()):
         prev_stats = prev_disk_io[disk]
         read_speed = (1.0 / poll_interval) * (stats.read_bytes - prev_stats.read_bytes) / (1024 ** 2)  # MB/s
         write_speed = (1.0 / poll_interval) * (stats.write_bytes - prev_stats.write_bytes) / (1024 ** 2)  # MB/s
         row = f"{disk.ljust(disk_width)} | {read_speed:.2f}/{write_speed:.2f}".rjust(max_readwrite_speed_len)
-        tables[i % len(tables)].append(row)
+        tables[i % 4].append(row)
 
     # Determine the width of the combined tables
-    combined_width = len(header) * len(tables) + (5 * (len(tables) - 1))  # Adding some space between the tables
+    combined_width = len(header) * 4 + 15  # Adding some space between the tables
 
     # Check if the terminal width is sufficient to display tables side by side
     terminal_width = os.get_terminal_size().columns
     if terminal_width >= combined_width:
-        print('true')
         # Print tables side by side
         for rows in zip(*tables):
             print("     ".join(rows))
-        # Print remaining rows if any table has more rows than others
-        max_rows = max(len(table) for table in tables)
-        for i in range(max_rows):
+        # If any table has more rows than others, print the remaining rows
+        max_len = max(len(table) for table in tables)
+        for i in range(max_len):
             row_parts = []
             for table in tables:
                 if i < len(table):
@@ -409,8 +408,38 @@ def display_disk_io():
                 else:
                     row_parts.append(" " * len(header))
             print("     ".join(row_parts))
+    elif terminal_width >= combined_width * 3 / 4:
+        # Print 3 tables side by side
+        for rows in zip(*tables[:3]):
+            print("     ".join(rows))
+        for row in tables[3]:
+            print(row)
+    elif terminal_width >= combined_width / 2:
+        # Print 2 tables side by side
+        for rows in zip(*tables[:2]):
+            print("     ".join(rows))
+        for rows in zip(*tables[2:]):
+            print("     ".join(rows))
+        # If any table has more rows than others, print the remaining rows
+        max_len = max(len(table) for table in tables[:2])
+        for i in range(max_len):
+            row_parts = []
+            for table in tables[:2]:
+                if i < len(table):
+                    row_parts.append(table[i])
+                else:
+                    row_parts.append(" " * len(header))
+            print("     ".join(row_parts))
+        max_len = max(len(table) for table in tables[2:])
+        for i in range(max_len):
+            row_parts = []
+            for table in tables[2:]:
+                if i < len(table):
+                    row_parts.append(table[i])
+                else:
+                    row_parts.append(" " * len(header))
+            print("     ".join(row_parts))
     else:
-        print('false')
         # Print tables one below the other
         for table in tables:
             for row in table:
