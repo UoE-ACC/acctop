@@ -388,7 +388,7 @@ def display_disk_io():
 
     # Check if the terminal width is sufficient to display tables side by side
     N = min(terminal_width // combined_width, 5)
-    N = max(N, 1)
+    # N = max(N, 1)
     print(f"Number of tables: {N}")
 
     # Data rows
