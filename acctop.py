@@ -387,12 +387,13 @@ def display_disk_io():
     terminal_width = os.get_terminal_size().columns
 
     # Check if the terminal width is sufficient to display tables side by side
+    print(f"Terminal width: {terminal_width}")
+    print(f"Combined width: {combined_width}")
     N = min(terminal_width // combined_width, 5)
-    # N = max(N, 1)
     print(f"Number of tables: {N}")
 
     # Data rows
-    tables = [[] for _ in range(N)]  # Create 4 empty tables
+    tables = [[] for _ in range(N)]  # Create N empty tables
     for i, (disk, stats) in enumerate(curr_disk_io.items()):
         prev_stats = prev_disk_io[disk]
         read_speed = (1.0 / poll_interval) * (stats.read_bytes - prev_stats.read_bytes) / (1024 ** 2)  # MB/s
