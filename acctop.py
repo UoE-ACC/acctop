@@ -362,7 +362,7 @@ def display_disk_io():
 
     # Column titles
     coltitle_disk = "Disk"
-    coltitle_readwrite_speed = "Read/Write (MB/s)"
+    coltitle_readwrite_speed = "Read/Write Speed (MB/s)"
 
     # Determine the width of each column
     disk_width = max(max(len(disk) for disk in disk_io.keys()), len(coltitle_disk))
@@ -382,6 +382,21 @@ def display_disk_io():
 
     # Determine the width of the combined tables
     combined_width = len(header) * 4 + 15  # Adding some space between the tables
+
+    # Get the console width
+    terminal_width = os.get_terminal_size().columns
+
+    # Check if the terminal width is sufficient to display tables side by side
+    if terminal_width < 2*combined_width:
+        N=1
+    elif terminal_width < 3*combined_width:
+        N = 2
+    elif terminal_width < 4*combined_width:
+        N=3
+    elif terminal_width < 5*combined_width:
+        N=4
+    else:
+        N = 5
 
     N = 2
     # Data rows
