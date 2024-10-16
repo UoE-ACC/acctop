@@ -386,7 +386,7 @@ def display_disk_io():
         read_speed = (1.0/poll_interval)*(stats.read_bytes - prev_stats.read_bytes) / (1024 ** 2)  # MB/s
         write_speed = (1.0/poll_interval)*(stats.write_bytes - prev_stats.write_bytes) / (1024 ** 2)  # MB/s
         print(f"{disk.ljust(disk_width)} | "
-              f"{str(f'{read_speed:.2f} / {write_speed:.2f}').rjust(coltitle_readwrite_speed)}")
+            f"{read_speed:.2f}/{write_speed:.2f}".rjust(max_readwrite_speed_len))
     print("")
 
 def clear_console():
