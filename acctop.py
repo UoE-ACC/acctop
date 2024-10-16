@@ -353,7 +353,7 @@ def display_system_info():
 
 def display_disk_io():
     """
-    Display disk I/O statistics including read and write bytes for each disk.
+    Display live disk I/O statistics including read and write bytes for each disk.
     """
 
     print(f"{DISK_COLOR}=== Disk I/O ==={RESET_COLOR}")
@@ -364,24 +364,40 @@ def display_disk_io():
     coltitle_disk = "Disk"
     coltitle_read_bytes = "Read Bytes (MB)"
     coltitle_write_bytes = "Write Bytes (MB)"
+    coltitle_read_speed = "Read Speed (MB/s)"
+    coltitle_write_speed = "Write Speed (MB/s)"
 
     # Determine the width of each column
     disk_width = max(max(len(disk) for disk in disk_io.keys()), len(coltitle_disk)) + 2
     max_read_bytes_len = max(len(coltitle_read_bytes), len(str(max(stats.read_bytes / (1024 ** 2) for stats in disk_io.values()))))
     max_write_bytes_len = max(len(coltitle_write_bytes), len(str(max(stats.write_bytes / (1024 ** 2) for stats in disk_io.values()))))
+    max_read_speed_len = len(coltitle_read_speed)
+    max_write_speed_len = len(coltitle_write_speed)
 
     # Header row with colored titles
     header = (f"{HEADER_COLOR}{coltitle_disk.ljust(disk_width)} | "
-                f"{coltitle_read_bytes.rjust(max_read_bytes_len)} | "
-                f"{coltitle_write_bytes.rjust(max_write_bytes_len)}{RESET_COLOR}")
+              f"{coltitle_read_bytes.rjust(max_read_bytes_len)} | "
+              f"{coltitle_write_bytes.rjust(max_write_bytes_len)} | "
+              f"{coltitle_read_speed.rjust(max_read_speed_len)} | "
+              f"{coltitle_write_speed.rjust(max_write_speed_len)}{RESET_COLOR}")
     print(header)
     print("-" * len(header))  # Separator line
 
+    # Store previous I/O stats to calculate speed
+    prev_disk_io = psutil.disk_io_counters(perdisk=True)
+    time.sleep(1)  # Sleep for 1 second to calculate speed
+    curr_disk_io = psutil.disk_io_counters(perdisk=True)
+
     # Data rows
-    for disk, stats in disk_io.items():
+    for disk, stats in curr_disk_io.items():
+        prev_stats = prev_disk_io[disk]
+        read_speed = (stats.read_bytes - prev_stats.read_bytes) / (1024 ** 2)  # MB/s
+        write_speed = (stats.write_bytes - prev_stats.write_bytes) / (1024 ** 2)  # MB/s
         print(f"{disk.ljust(disk_width)} | "
-                f"{str(int(stats.read_bytes / (1024 ** 2))).rjust(max_read_bytes_len)} | "
-                f"{str(int(stats.write_bytes / (1024 ** 2))).rjust(max_write_bytes_len)}")
+              f"{str(int(stats.read_bytes / (1024 ** 2))).rjust(max_read_bytes_len)} | "
+              f"{str(int(stats.write_bytes / (1024 ** 2))).rjust(max_write_bytes_len)} | "
+              f"{str(f'{read_speed:.2f}').rjust(max_read_speed_len)} | "
+              f"{str(f'{write_speed:.2f}').rjust(max_write_speed_len)}")
     print("")
 
 def clear_console():
