@@ -374,7 +374,7 @@ def display_disk_io():
     print(header)
     # Determine the width of the combined tables
     combined_width = disk_width+max_readwrite_speed_len+4  # Adding some space between the tables
-    print("-" * (len(combined_width)-10) )  # Separator line
+    print("-" * combined_width)  # Separator line
 
     print(f"Combined width: {combined_width}")
     print(disk_width)
