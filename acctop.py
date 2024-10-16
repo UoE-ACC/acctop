@@ -374,14 +374,19 @@ def display_disk_io():
     print(header)
     print("-" * (len(header)-10) )  # Separator line
 
+    # Determine the width of the combined tables
+    combined_width = len(header)  # Adding some space between the tables
+    print(f"Combined width: {combined_width}")
+    print(disk_width)
+    print(max_readwrite_speed_len)
+
     # Store previous I/O stats to calculate speed
     prev_disk_io = psutil.disk_io_counters(perdisk=True)
     poll_interval = 0.01  # Polling interval in seconds
     time.sleep(poll_interval)  # Sleep for 1 second to calculate speed
     curr_disk_io = psutil.disk_io_counters(perdisk=True)
 
-    # Determine the width of the combined tables
-    combined_width = len(header)  # Adding some space between the tables
+
 
     # Get the console width
     terminal_width = os.get_terminal_size().columns
