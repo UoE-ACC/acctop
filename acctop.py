@@ -387,18 +387,10 @@ def display_disk_io():
     terminal_width = os.get_terminal_size().columns
 
     # Check if the terminal width is sufficient to display tables side by side
-    if terminal_width < 2*combined_width:
-        N=1
-    elif terminal_width < 3*combined_width:
-        N = 2
-    elif terminal_width < 4*combined_width:
-        N=3
-    elif terminal_width < 5*combined_width:
-        N=4
-    else:
-        N = 5
+    N = min(terminal_width // combined_width, 5)
+    N = max(N, 1)
+    print(f"Number of tables: {N}")
 
-    N = 2
     # Data rows
     tables = [[] for _ in range(N)]  # Create 4 empty tables
     for i, (disk, stats) in enumerate(curr_disk_io.items()):
@@ -407,7 +399,6 @@ def display_disk_io():
         write_speed = (1.0 / poll_interval) * (stats.write_bytes - prev_stats.write_bytes) / (1024 ** 2)  # MB/s
         row = f"{disk.ljust(disk_width)} | {read_speed:.2f}/{write_speed:.2f}".rjust(max_readwrite_speed_len)
         tables[i % N].append(row)
-
 
 
     # Function to print tables side by side
@@ -453,6 +444,7 @@ if __name__ == "__main__":
         parser.add_argument('--show-system', action='store_true', help='Display system info')
         parser.add_argument('--show-disk-io', action='store_true', help='Display disk I/O statistics')
         parser.add_argument('--show-all', action='store_true', help='Display all optional features')
+        parser.add_argument('--show-most', action='store_true', help='Display all optional features')
         return parser.parse_args()
 
     args = parse_arguments()
@@ -470,7 +462,7 @@ if __name__ == "__main__":
                 display_load_average()  # Load average
             if args.show_system or args.show_all:
                 display_system_info()  # System uptime and kernel version
-            if args.show_disk_io or args.show_all:
+            if args.show_disk_io or args.show_all or args.show_most:
                 display_disk_io()
             print(f"{HEADER_COLOR}========================================{RESET_COLOR}")
             print('Press ctrl+c to exit...')
