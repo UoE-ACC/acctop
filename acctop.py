@@ -486,6 +486,7 @@ if __name__ == "__main__":
                 output.append(display_disk_io())
             time.sleep(args.interval)  # Update based on the interval argument
             clear_console()  # Clear the screen
+            # Print the output all at once
             output.append(f"{HEADER_COLOR}========================================{RESET_COLOR}")
             print("\n".join(output))
             output.append('Press ctrl+c to exit...')
