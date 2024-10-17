@@ -106,20 +106,31 @@ def display_disk_usage():
 
     print(f"{DISK_COLOR}=== Disk Usage ==={RESET_COLOR}")
     partitions = psutil.disk_partitions()
+    table_data = []
     for partition in partitions:
         try:
             disk_usage = psutil.disk_usage(partition.mountpoint)
             usage_percentage = disk_usage.percent
-            print(f"{partition.mountpoint}: "
-                  f"Total: {format_size(disk_usage.total)} | "
-                  f"Used: {format_size(disk_usage.used)} | "
-                  f"Free: {format_size(disk_usage.free)} | "
-                  f"{create_disk_usage_bar(usage_percentage)}")
-            print("")
+            table_data.append([
+                partition.mountpoint,
+                format_size(disk_usage.total),
+                format_size(disk_usage.used),
+                format_size(disk_usage.free),
+                create_disk_usage_bar(usage_percentage)
+            ])
         except PermissionError:
             # This can happen on some systems where certain partitions are not accessible
-            print(f"Mountpoint: {partition.mountpoint} - Permission Denied")
-            print("")
+            table_data.append([
+                partition.mountpoint,
+                "Permission Denied",
+                "Permission Denied",
+                "Permission Denied",
+                "Permission Denied"
+            ])
+
+    headers = ["Mountpoint", "Total", "Used", "Free", "Usage"]
+    print(tabulate(table_data, headers=headers, tablefmt="pretty"))
+    print("")
 
 
 def display_memory_usage():
