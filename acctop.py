@@ -230,6 +230,8 @@ def display_cpu_usage_in_columns():
     core_number_width = len(str(num_cores))  # Width of the core number
     core_joined_label_width = core_label_width+core_number_width  # Width of the core label with number
     max_bar_length = max(len(create_cpu_usage_bar(p).rstrip()) for p in cpu_percentages)
+    print(max_bar_length)
+    input()
 
     # Total column width (bar + percentage + spacing)
     column_width = core_joined_label_width + max_bar_length + len(":   ") # Extra space for padding to match with the bar padding in loop below
