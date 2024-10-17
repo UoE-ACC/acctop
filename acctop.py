@@ -299,7 +299,7 @@ def display_user_usage():
     # Display the filtered data in a table
     if filtered_user_data:
         colalign = ("left", "right", "right", "right")
-        return f'{cumulative_user_usage_header}\n' + tabulate(filtered_user_data, headers='keys', tablefmt="pretty", colalign=colalign)
+        return f'{cumulative_user_usage_header}\n' + tabulate(filtered_user_data, headers='keys', tablefmt="pretty", colalign=colalign) + "\n"
     else:
         return "No users exceed the specified thresholds.\n"
 
@@ -320,24 +320,6 @@ def display_network_usage():
     coltitle_packets_sent = "Packets Sent"
     coltitle_packets_recv = "Packets Received"
 
-    # Determine the width of each column
-    iface_width = max(max(len(iface) for iface in net_io.keys()), len(coltitle_interface)) + 2
-    max_megabytes_sent_len = max(len(coltitle_megabytes_sent), len(str(max(stats.bytes_sent / (1024 ** 2) for stats in net_io.values()))))
-    max_megabytes_recv_len = max(len(coltitle_megabytes_recv), len(str(max(stats.bytes_recv / (1024 ** 2) for stats in net_io.values()))))
-    max_packets_sent_len = max(len(coltitle_packets_sent), len(str(max(stats.packets_sent for stats in net_io.values()))))
-    max_packets_recv_len = max(len(coltitle_packets_recv), len(str(max(stats.packets_recv for stats in net_io.values()))))
-
-    # Header row with colored titles
-    header = (f"{HEADER_COLOR}{coltitle_interface.ljust(iface_width)} | "
-              f"{coltitle_megabytes_sent.rjust(max_megabytes_sent_len)} | "
-              f"{coltitle_megabytes_recv.rjust(max_megabytes_recv_len)} | "
-              f"{coltitle_packets_sent.rjust(max_packets_sent_len)} | "
-              f"{coltitle_packets_recv.rjust(max_packets_recv_len)}{RESET_COLOR}")
-    network_usage_separator = "-" * len(header)
-
-    # Data rows
-    network_usage_rows = ""
-
     table_data = []
     for interface, stats in net_io.items():
         row = [
@@ -353,8 +335,6 @@ def display_network_usage():
     colalign = ("left", "right", "right", "right", "right")
     table = tabulate(table_data, headers=headers, tablefmt="pretty", colalign=colalign)
     return f"{network_usage_header}\n{table}\n"
-
-    # return network_usage_header + "\n" + network_usage_separator + "\n" + network_usage_rows + "\n"
 
 def display_load_average():
     """
