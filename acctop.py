@@ -129,7 +129,7 @@ def display_disk_usage():
             ])
 
     headers = ["Mountpoint", "Total", "Used", "Free", "Usage"]
-    colalign = ("left", "right", "right", "right", "center")
+    colalign = ("left", "right", "right", "right", "left")
     print(tabulate(table_data, headers=headers, tablefmt="pretty", colalign=colalign))
     print("")
 
