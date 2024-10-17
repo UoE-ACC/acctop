@@ -112,11 +112,11 @@ def display_disk_usage():
             disk_usage = psutil.disk_usage(partition.mountpoint)
             usage_percentage = disk_usage.percent
             table_data.append([
-                partition.mountpoint.ljust(20),
-                format_size(disk_usage.total).rjust(15),
-                format_size(disk_usage.used).rjust(15),
-                format_size(disk_usage.free).rjust(15),
-                create_disk_usage_bar(usage_percentage).ljust(40)
+                partition.mountpoint,
+                format_size(disk_usage.total),
+                format_size(disk_usage.used),
+                format_size(disk_usage.free),
+                create_disk_usage_bar(usage_percentage)
             ])
         except PermissionError:
             # This can happen on some systems where certain partitions are not accessible
@@ -129,7 +129,8 @@ def display_disk_usage():
             ])
 
     headers = ["Mountpoint", "Total", "Used", "Free", "Usage"]
-    print(tabulate(table_data, headers=headers, tablefmt="pretty"))
+    colalign = ("left", "right", "right", "right", "center")
+    print(tabulate(table_data, headers=headers, tablefmt="pretty", colalign=colalign))
     print("")
 
 
