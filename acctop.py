@@ -468,6 +468,7 @@ if __name__ == "__main__":
 
     args = parse_arguments()
     try:
+        clear_console()  # Clear the screen
         while True:
 
             output = []
@@ -484,12 +485,15 @@ if __name__ == "__main__":
                 output.append(display_system_info())  # System uptime and kernel version
             if args.show_disk_io or args.show_all or args.show_most:
                 output.append(display_disk_io())
-            time.sleep(args.interval)  # Update based on the interval argument
-            clear_console()  # Clear the screen
+
             # Print the output all at once
             output.append(f"{HEADER_COLOR}========================================{RESET_COLOR}")
             print("\n".join(output))
             output.append('Press ctrl+c to exit...')
+
+            # Wait for the specified interval and clear the console
+            time.sleep(args.interval)  # Update based on the interval argument
+            clear_console()  # Clear the screen
 
 
     except KeyboardInterrupt:
