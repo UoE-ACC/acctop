@@ -94,8 +94,15 @@ def create_disk_usage_bar(percentage, bar_length=30):
 def display_disk_usage():
     """
     Displays the disk usage statistics for all mounted disks including total, used,
-    and free space in gigabytes, along with a visual usage bar.
+    and free space in gigabytes or terabytes, along with a visual usage bar.
     """
+
+    def format_size(size):
+        """Helper function to format the size in GB or TB."""
+        if size >= 1024 ** 4:  # Size in TB
+            return f"{size / (1024 ** 4):.2f} TB"
+        else:  # Size in GB
+            return f"{size / (1024 ** 3):.2f} GB"
 
     print(f"{DISK_COLOR}=== Disk Usage ==={RESET_COLOR}")
     partitions = psutil.disk_partitions()
@@ -104,9 +111,9 @@ def display_disk_usage():
             disk_usage = psutil.disk_usage(partition.mountpoint)
             usage_percentage = disk_usage.percent
             print(f"Mountpoint: {partition.mountpoint}")
-            print(f"Total: {disk_usage.total / (1024 ** 3):.2f} GB | "
-                  f"Used: {disk_usage.used / (1024 ** 3):.2f} GB | "
-                  f"Free: {disk_usage.free / (1024 ** 3):.2f} GB | "
+            print(f"Total: {format_size(disk_usage.total)} | "
+                  f"Used: {format_size(disk_usage.used)} | "
+                  f"Free: {format_size(disk_usage.free)} | "
                   f"{create_disk_usage_bar(usage_percentage)}")
             print("")
         except PermissionError:
