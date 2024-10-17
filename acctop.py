@@ -469,6 +469,7 @@ if __name__ == "__main__":
     args = parse_arguments()
     try:
         while True:
+
             output = []
             output.append(f"{HEADER_COLOR}=== Real-Time System Resource Usage for {os.uname().nodename.capitalize()} ==={RESET_COLOR}")
             output.append(display_disk_usage())  # Disk usage with a bar
@@ -485,9 +486,10 @@ if __name__ == "__main__":
                 output.append(display_disk_io())
             output.append(f"{HEADER_COLOR}========================================{RESET_COLOR}")
             output.append('Press ctrl+c to exit...')
+            time.sleep(args.interval)  # Update based on the interval argument
             clear_console()  # Clear the screen
             print("\n".join(output))
-            time.sleep(args.interval)  # Update based on the interval argument
+
 
     except KeyboardInterrupt:
         print("\nExiting real-time monitoring.")
