@@ -301,7 +301,9 @@ def display_user_usage():
 
     # Display the filtered data in a table
     if filtered_user_data:
-        print(tabulate(filtered_user_data, headers='keys', tablefmt='pretty'))
+        colalign = ("left", "right", "right", "right")
+        print(tabulate(filtered_user_data, headers='keys', tablefmt="pretty", colalign=colalign))
+        # print(tabulate(filtered_user_data, headers='keys', tablefmt='pretty'))
     else:
         print("No users exceed the specified thresholds.")
     print("")
