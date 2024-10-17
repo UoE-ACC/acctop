@@ -234,21 +234,22 @@ def display_cpu_usage_in_columns():
 
     # Prepare the data to be displayed in rows
     row_data = []
+    cpu_usage_rows = ""
     for i, percentage in enumerate(cpu_percentages):
         bar = create_cpu_usage_bar(percentage)
         entry = f"Core {i:>{core_number_width}}: {bar}  "
         row_data.append(entry)
 
-        # When we have enough data for a full row or it's the last core, print the row
+        # When we have enough data for a full row or it's the last core, append the row
         if (i + 1) % columns == 0 or i == len(cpu_percentages) - 1:
             # Pad the row if necessary (if not enough columns are filled)
             while len(row_data) < columns:
                 row_data.append(" " * column_width)  # Add empty string to fill the columns
-            print(row_format.format(*row_data))
+            cpu_usage_rows += row_format.format(*row_data) + "\n"
             row_data = []  # Reset for the next row
     average_cpu_usage = sum(cpu_percentages) / len(cpu_percentages)
     average_cpu_usage_string = f"Average CPU Usage: {create_cpu_usage_bar(average_cpu_usage)}"
-    return f'{cpu_usage_header}\n{average_cpu_usage_string}\n'
+    return f'{cpu_usage_header}\n{cpu_usage_rows}\n{average_cpu_usage_string}\n'
 
 def display_user_usage():
     """
@@ -471,6 +472,7 @@ if __name__ == "__main__":
         clear_console()  # Clear the screen
         while True:
 
+            # Create the output to be displayed
             output = []
             output.append(f"{HEADER_COLOR}=== Real-Time System Resource Usage for {os.uname().nodename.capitalize()} ==={RESET_COLOR}")
             output.append(display_disk_usage())  # Disk usage with a bar
