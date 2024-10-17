@@ -385,7 +385,6 @@ def display_disk_io():
 
     # Determine the width of the combined tables
     combined_width = disk_width+max_readwrite_speed_len  # Adding some space between the tables
-    disk_io_separator = "-" * combined_width# Separator line
 
     # Store previous I/O stats to calculate speed
     prev_disk_io = psutil.disk_io_counters(perdisk=True)
@@ -421,11 +420,9 @@ def display_disk_io():
                 else:
                     row_parts.append(" " * len(header))
             row_parts.append(" " * len(header))
-            row_parts.append("\n")
+            # row_parts.append("\n")
         disk_io_rows.append(" ".join(row_parts))
         return "\n".join(disk_io_rows)
-    # TODO: sort out the return of multi-line string for disk io tables
-    # Print tables side by side
 
     return f'{disk_io_header}\n' + header +'\n'+ tables_side_by_side(tables)
 
