@@ -229,9 +229,9 @@ def display_cpu_usage_in_columns():
     core_label_width = len("Core ")  # Default width for the core label
     core_number_width = len(str(num_cores))  # Width of the core number
     core_joined_label_width = core_label_width+core_number_width  # Width of the core label with number
-    max_bar_length = max(len(create_cpu_usage_bar(p).rstrip()) for p in cpu_percentages)
-    print(max_bar_length)
-    input()
+    max_bar_length = max(len(create_cpu_usage_bar(p).rstrip()) for p in cpu_percentages)-10
+    # print(max_bar_length)
+    # input()
 
     # Total column width (bar + percentage + spacing)
     column_width = core_joined_label_width + max_bar_length + len(":   ") # Extra space for padding to match with the bar padding in loop below
@@ -242,6 +242,7 @@ def display_cpu_usage_in_columns():
     # Prepare rows for display based on the number of columns
     row_format = "".join([f"{{:<{column_width}}}" for _ in range(columns)])
 
+    [###       ]  39.50%
     # Prepare the data to be displayed in rows
     row_data = []
     for i, percentage in enumerate(cpu_percentages):
