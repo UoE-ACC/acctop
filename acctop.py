@@ -402,7 +402,7 @@ def display_disk_io():
     # Header row with colored titles
     header = (f"{HEADER_COLOR}{coltitle_disk.ljust(disk_width)} | "
               f"{coltitle_readwrite_speed.ljust(max_readwrite_speed_len)}{RESET_COLOR}")
-    print(header)
+
     # Determine the width of the combined tables
     combined_width = disk_width+max_readwrite_speed_len  # Adding some space between the tables
     disk_io_separator = "-" * combined_width# Separator line
@@ -446,7 +446,8 @@ def display_disk_io():
         return "\n".join(disk_io_rows)
     # TODO: sort out the return of multi-line string for disk io tables
     # Print tables side by side
-    return f'{disk_io_header}\n' + tables_side_by_side(tables)
+
+    return f'{disk_io_header}\n' + header +'\n'+ tables_side_by_side(tables)
 
 def clear_console():
     """
