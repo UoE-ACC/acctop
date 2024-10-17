@@ -491,10 +491,6 @@ if __name__ == "__main__":
             print(f"{HEADER_COLOR}========================================{RESET_COLOR}")
             print('Press ctrl+c to exit...')
             time.sleep(args.interval)  # Update based on the interval argument
-            # Check if 'q' is pressed to exit the loop
-            if sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
-                if sys.stdin.read(1) == 'q':
-                    break
 
     except KeyboardInterrupt:
         print("\nExiting real-time monitoring.")
