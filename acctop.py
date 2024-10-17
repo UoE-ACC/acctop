@@ -159,14 +159,9 @@ def display_memory_usage():
 
     memory_info = psutil.virtual_memory()
     swap_info = psutil.swap_memory()
+    # TODO: we could consider displaying the swap usage as well
 
-    # Determine the width of each column
-    total_width = max(len(f"{memory_info.total / (1024 ** 3):.2f} GB"), len(f"{swap_info.total / (1024 ** 3):.2f} GB")) + 2
-    used_width = max(len(f"{memory_info.used / (1024 ** 3):.2f} GB"), len(f"{swap_info.used / (1024 ** 3):.2f} GB")) + 2
-    available_width = len(f"{memory_info.available / (1024 ** 3):.2f} GB") + 2
-    percent_width = max(len(f"{memory_info.percent}%"), len(f"{swap_info.percent}%")) + 2
-
-    # Print Memory Usage
+    # get Memory Usage in a nice format
     memory_usage_header = f"{MEMORY_COLOR}=== Memory Usage ==={RESET_COLOR}"
     memory_usage_info = (
         f"Total: {f'{memory_info.total / (1024 ** 3):.2f} GB'} | "
@@ -420,7 +415,6 @@ def display_disk_io():
                 else:
                     row_parts.append(" " * len(header))
             row_parts.append(" " * len(header))
-            # row_parts.append("\n")
         disk_io_rows.append(" ".join(row_parts))
         return "\n".join(disk_io_rows)
 
@@ -445,7 +439,7 @@ if __name__ == "__main__":
 
         # Parse command-line arguments
         parser = argparse.ArgumentParser(description="Real-Time System Resource Monitoring Tool")
-        parser.add_argument('--interval', type=float, default=3, help='Update interval in seconds (default: 3)')
+        parser.add_argument('--interval', type=float, default=5, help='Update interval in seconds (default: 3)')
         parser.add_argument('--show-network', action='store_true', help='Display network usage')
         parser.add_argument('--show-load', action='store_true', help='Display load average')
         parser.add_argument('--show-system', action='store_true', help='Display system info')
