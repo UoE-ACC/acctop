@@ -444,7 +444,9 @@ if __name__ == "__main__":
         parser.add_argument('--show-load', action='store_true', help='Display load average')
         parser.add_argument('--show-system', action='store_true', help='Display system info')
         parser.add_argument('--show-disk-io', action='store_true', help='Display disk I/O statistics')
+        parser.add_argument('--show-disk-io', action='store_true', help='Display disk I/O statistics')
         parser.add_argument('--show-all', action='store_true', help='Display all optional features')
+        parser.add_argument('--show-most', action='store_true', help='Display all optional features')
         parser.add_argument('--show-most', action='store_true', help='Display all optional features')
         return parser.parse_args()
 
@@ -466,6 +468,8 @@ if __name__ == "__main__":
                 output.append(display_load_average())  # Load average
             if args.show_system or args.show_all:
                 output.append(display_system_info())  # System uptime and kernel version
+            if args.show_disk_io or args.show_all or args.show_most:
+                display_disk_io()
             if args.show_disk_io or args.show_all or args.show_most:
                 output.append(display_disk_io())
             output.append(f"{HEADER_COLOR}========================================{RESET_COLOR}")
