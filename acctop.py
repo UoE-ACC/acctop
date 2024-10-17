@@ -197,7 +197,7 @@ def get_cpu_columns(column_width):
 
     try:
         terminal_width = os.get_terminal_size().columns
-        return min(terminal_width // column_width)
+        return terminal_width // column_width
     except OSError:
         return 1  # Default to 2 columns if terminal size cannot be determined
 
