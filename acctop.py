@@ -423,6 +423,7 @@ def display_disk_io():
     # Function to print tables side by side
     def print_tables_side_by_side(tables):
         max_len = max(len(table) for table in tables)
+        disk_io_rows = []
         for i in range(max_len):
             row_parts = []
             for table in tables:
@@ -430,10 +431,14 @@ def display_disk_io():
                     row_parts.append(table[i])
                 else:
                     row_parts.append(" " * len(header))
-            print(" ".join(row_parts))
+            row_parts.append(" " * len(header))
+            row_parts.append("\n")
+        disk_io_rows.append(" ".join(row_parts))
+        return "\n".join(disk_io_rows)
     # TODO: sort out the return of multi-line string for disk io tables
     # Print tables side by side
     print_tables_side_by_side(tables)
+    input()
     return f'{header}'
 
 def clear_console():
@@ -493,7 +498,6 @@ if __name__ == "__main__":
             # Wait for the specified interval and clear the console
             time.sleep(args.interval)  # Update based on the interval argument
             clear_console()  # Clear the screen
-
 
     except KeyboardInterrupt:
         print("\nExiting real-time monitoring.")
