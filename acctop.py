@@ -484,11 +484,11 @@ if __name__ == "__main__":
                 output.append(display_system_info())  # System uptime and kernel version
             if args.show_disk_io or args.show_all or args.show_most:
                 output.append(display_disk_io())
-            output.append(f"{HEADER_COLOR}========================================{RESET_COLOR}")
-            output.append('Press ctrl+c to exit...')
             time.sleep(args.interval)  # Update based on the interval argument
             clear_console()  # Clear the screen
+            output.append(f"{HEADER_COLOR}========================================{RESET_COLOR}")
             print("\n".join(output))
+            output.append('Press ctrl+c to exit...')
 
 
     except KeyboardInterrupt:
