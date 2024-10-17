@@ -249,7 +249,8 @@ def display_cpu_usage_in_columns():
             print(row_format.format(*row_data))
             row_data = []  # Reset for the next row
     average_cpu_usage = sum(cpu_percentages) / len(cpu_percentages)
-    print(f"Average CPU Usage: {get_usage_color(average_cpu_usage)}{average_cpu_usage:.2f}%{RESET_COLOR}")
+    print(f"Average CPU Usage: {get_usage_color(average_cpu_usage)}{average_cpu_usage:.2f}%{RESET_COLOR}"
+          f"{create_cpu_usage_bar(average_cpu_usage)}")
     print("")
 
 def display_user_usage():
