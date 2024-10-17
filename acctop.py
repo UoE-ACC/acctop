@@ -467,8 +467,6 @@ if __name__ == "__main__":
             if args.show_system or args.show_all:
                 output.append(display_system_info())  # System uptime and kernel version
             if args.show_disk_io or args.show_all or args.show_most:
-                display_disk_io()
-            if args.show_disk_io or args.show_all or args.show_most:
                 output.append(display_disk_io())
             output.append(f"{HEADER_COLOR}========================================{RESET_COLOR}")
             output.append('Press ctrl+c to exit...')
