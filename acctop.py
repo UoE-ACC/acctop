@@ -220,8 +220,6 @@ def display_cpu_usage_in_columns():
     core_number_width = len(str(num_cores))  # Width of the core number
     core_joined_label_width = core_label_width+core_number_width  # Width of the core label with number
     max_bar_length = max(len(create_cpu_usage_bar(p).rstrip()) for p in cpu_percentages)-lencolors # Max bar length for the bars, the minus lencolors is to remove the html color codes
-    # print(max_bar_length)
-    # input()
 
     # Total column width (bar + percentage + spacing)
     column_width = core_joined_label_width + max_bar_length + len(": ") # Extra space for padding to match with the bar padding in loop below
@@ -249,7 +247,7 @@ def display_cpu_usage_in_columns():
             row_data = []  # Reset for the next row
     average_cpu_usage = sum(cpu_percentages) / len(cpu_percentages)
     average_cpu_usage_string = f"Average CPU Usage: {create_cpu_usage_bar(average_cpu_usage)}"
-    return f'{cpu_usage_header}\n{cpu_usage_rows}\n{average_cpu_usage_string}\n'
+    return f'{cpu_usage_header}\n{cpu_usage_rows}{average_cpu_usage_string}\n'
 
 def display_user_usage():
     """
@@ -378,7 +376,7 @@ def display_disk_io():
     Display live disk I/O statistics including read and write bytes for each disk.
     """
 
-    # Print header
+    # Define header
     disk_io_header = (f"{DISK_COLOR}=== Disk I/O ==={RESET_COLOR}")
 
     # Get disk I/O statistics
@@ -436,7 +434,7 @@ def display_disk_io():
     # TODO: sort out the return of multi-line string for disk io tables
     # Print tables side by side
     print_tables_side_by_side(tables)
-    print("")
+    return f'{header}'
 
 
 def clear_console():
