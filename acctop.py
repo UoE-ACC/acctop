@@ -437,7 +437,7 @@ def display_disk_io():
         return "\n".join(disk_io_rows)
     # TODO: sort out the return of multi-line string for disk io tables
     # Print tables side by side
-    return f'{disk_io_header}\n' + tables + "\n" + tables_side_by_side(tables)
+    return f'{disk_io_header}\n' + tables_side_by_side(tables)
 
 def clear_console():
     """
