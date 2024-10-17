@@ -110,7 +110,7 @@ def display_disk_usage():
         try:
             disk_usage = psutil.disk_usage(partition.mountpoint)
             usage_percentage = disk_usage.percent
-            print(f"Mountpoint: {partition.mountpoint}: "
+            print(f"{partition.mountpoint}: "
                   f"Total: {format_size(disk_usage.total)} | "
                   f"Used: {format_size(disk_usage.used)} | "
                   f"Free: {format_size(disk_usage.free)} | "
