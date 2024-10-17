@@ -50,6 +50,7 @@ USER_COLOR      = "\033[1;35m"  # Bold Magenta"
 LOAD_COLOR      = "\033[1;35m"  # Bold Magenta"
 INFO_COLOR      = "\033[1;35m"  # Bold Magenta"
 RESET_COLOR     = "\033[0m"     # Reset to default
+lencolors = len(HEADER_COLOR) + len(RESET_COLOR)
 
 # Additional ANSI escape codes for CPU and memory usage bars
 GREEN = "\033[1;32m"
@@ -229,7 +230,7 @@ def display_cpu_usage_in_columns():
     core_label_width = len("Core ")  # Default width for the core label
     core_number_width = len(str(num_cores))  # Width of the core number
     core_joined_label_width = core_label_width+core_number_width  # Width of the core label with number
-    max_bar_length = max(len(create_cpu_usage_bar(p).rstrip()) for p in cpu_percentages)-10 # Max bar length for the bars, the minus 10 is to remove the html color code
+    max_bar_length = max(len(create_cpu_usage_bar(p).rstrip()) for p in cpu_percentages)-lencolors # Max bar length for the bars, the minus lencolors is to remove the html color codes
     # print(max_bar_length)
     # input()
 
@@ -242,7 +243,6 @@ def display_cpu_usage_in_columns():
     # Prepare rows for display based on the number of columns
     row_format = "".join([f"{{:<{column_width}}}" for _ in range(columns)])
 
-    [###       ]  39.50%
     # Prepare the data to be displayed in rows
     row_data = []
     for i, percentage in enumerate(cpu_percentages):
