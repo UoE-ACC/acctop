@@ -197,18 +197,9 @@ def get_cpu_columns(column_width):
 
     try:
         terminal_width = os.get_terminal_size().columns
-        if terminal_width < column_width*2:
-            return 1  # Narrow terminal, use 1 column
-        elif terminal_width < column_width*3:
-            return 2  # Medium terminal, use 2 columns
-        elif terminal_width < column_width*4:
-            return 3  # Wide terminal, use 3 columns
-        elif terminal_width < column_width*5:
-            return 4  # Extra wide terminal, use 4 columns
-        else:
-            return 5  # Extra extra wide terminal, use 5 columns
+        return min(terminal_width // column_width)
     except OSError:
-        return 2  # Default to 2 columns if terminal size cannot be determined
+        return 1  # Default to 2 columns if terminal size cannot be determined
 
 def display_cpu_usage_in_columns():
     """
