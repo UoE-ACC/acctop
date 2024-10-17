@@ -436,7 +436,6 @@ def display_disk_io():
     print_tables_side_by_side(tables)
     return f'{header}'
 
-
 def clear_console():
     """
     Clears the console screen. Works on both Windows and Unix-like systems.
@@ -456,7 +455,7 @@ if __name__ == "__main__":
 
         # Parse command-line arguments
         parser = argparse.ArgumentParser(description="Real-Time System Resource Monitoring Tool")
-        parser.add_argument('--interval', type=float, default=2.5, help='Update interval in seconds (default: 2.5)')
+        parser.add_argument('--interval', type=float, default=3, help='Update interval in seconds (default: 3)')
         parser.add_argument('--show-network', action='store_true', help='Display network usage')
         parser.add_argument('--show-load', action='store_true', help='Display load average')
         parser.add_argument('--show-system', action='store_true', help='Display system info')
