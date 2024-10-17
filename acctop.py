@@ -337,15 +337,24 @@ def display_network_usage():
 
     # Data rows
     network_usage_rows = ""
-    for interface, stats in net_io.items():
-        row = (f"{interface.ljust(iface_width)} | "
-               f"{str(int(stats.bytes_sent / (1024 ** 2))).rjust(max_megabytes_sent_len)} | "
-               f"{str(int(stats.bytes_recv / (1024 ** 2))).rjust(max_megabytes_recv_len)} | "
-               f"{str(stats.packets_sent).rjust(max_packets_sent_len)} | "
-               f"{str(stats.packets_recv).rjust(max_packets_recv_len)}")
-        network_usage_rows += "\n" + row
 
-    return network_usage_header + "\n" + network_usage_separator + "\n" + network_usage_rows + "\n"
+    table_data = []
+    for interface, stats in net_io.items():
+        row = [
+            interface,
+            f"{stats.bytes_sent / (1024 ** 2):.2f}",
+            f"{stats.bytes_recv / (1024 ** 2):.2f}",
+            stats.packets_sent,
+            stats.packets_recv
+        ]
+        table_data.append(row)
+
+    headers = [coltitle_interface, coltitle_megabytes_sent, coltitle_megabytes_recv, coltitle_packets_sent, coltitle_packets_recv]
+    colalign = ("left", "right", "right", "right", "right")
+    table = tabulate(table_data, headers=headers, tablefmt="pretty", colalign=colalign)
+    return f"{network_usage_header}\n{table}\n"
+
+    # return network_usage_header + "\n" + network_usage_separator + "\n" + network_usage_rows + "\n"
 
 def display_load_average():
     """
