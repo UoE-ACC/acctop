@@ -420,8 +420,8 @@ def display_disk_io():
         row = f"{disk.ljust(disk_width)} | {read_speed:.2f}/{write_speed:.2f}".ljust(max_readwrite_speed_len)
         tables[i % N].append(row)
 
-    # Function to print tables side by side
-    def print_tables_side_by_side(tables):
+    # Function to return tables side by side
+    def tables_side_by_side(tables):
         max_len = max(len(table) for table in tables)
         disk_io_rows = []
         for i in range(max_len):
@@ -437,9 +437,7 @@ def display_disk_io():
         return "\n".join(disk_io_rows)
     # TODO: sort out the return of multi-line string for disk io tables
     # Print tables side by side
-    print_tables_side_by_side(tables)
-    input()
-    return f'{header}'
+    return f'{disk_io_header}\n' + tables + "\n" + tables_side_by_side(tables)
 
 def clear_console():
     """
