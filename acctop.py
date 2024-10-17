@@ -474,22 +474,24 @@ if __name__ == "__main__":
     args = parse_arguments()
     try:
         while True:
-            clear_console()  # Clear the screen
-            print(f"{HEADER_COLOR}=== Real-Time System Resource Usage for {os.uname().nodename.capitalize()} ==={RESET_COLOR}")
-            display_disk_usage()  # Disk usage with a bar
-            display_memory_usage()  # Memory usage with a bar
-            display_cpu_usage_in_columns()  # Dynamically set number of columns based on terminal width
-            display_user_usage()  # Cumulative user usage with CPU normalized by number of cores
+            output = []
+            output.append(f"{HEADER_COLOR}=== Real-Time System Resource Usage for {os.uname().nodename.capitalize()} ==={RESET_COLOR}")
+            output.append(display_disk_usage())  # Disk usage with a bar
+            output.append(display_memory_usage())  # Memory usage with a bar
+            output.append(display_cpu_usage_in_columns())  # Dynamically set number of columns based on terminal width
+            output.append(display_user_usage())  # Cumulative user usage with CPU normalized by number of cores
             if args.show_network or args.show_all:
-                display_network_usage()  # Network usage with aligned columns and colored headers
+                output.append(display_network_usage())  # Network usage with aligned columns and colored headers
             if args.show_load or args.show_all:
-                display_load_average()  # Load average
+                output.append(display_load_average())  # Load average
             if args.show_system or args.show_all:
-                display_system_info()  # System uptime and kernel version
+                output.append(display_system_info())  # System uptime and kernel version
             if args.show_disk_io or args.show_all or args.show_most:
-                display_disk_io()
-            print(f"{HEADER_COLOR}========================================{RESET_COLOR}")
-            print('Press ctrl+c to exit...')
+                output.append(display_disk_io())
+            output.append(f"{HEADER_COLOR}========================================{RESET_COLOR}")
+            output.append('Press ctrl+c to exit...')
+            clear_console()  # Clear the screen
+            print("\n".join(output))
             time.sleep(args.interval)  # Update based on the interval argument
 
     except KeyboardInterrupt:
