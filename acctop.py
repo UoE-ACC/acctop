@@ -10,6 +10,7 @@ Features:
 - Network Usage: (Optional) Displays network statistics including bytes sent/received and packets sent/received per network interface.
 - Load Average: (Optional) Shows the system load average for the past 1, 5, and 15 minutes.
 - System Info: (Optional) Displays system uptime and kernel version.
+- Disk I/O: (Optional) Displays live disk I/O statistics including read and write bytes for each disk.
 
 The script uses ANSI escape codes to add color to the terminal output, making it easier to read and interpret the data.
 
@@ -26,9 +27,9 @@ Functions:
 - display_network_usage(): Displays network usage statistics with aligned columns and colored headers.
 - display_load_average(): Displays the system load average for the past 1, 5, and 15 minutes.
 - display_system_info(): Displays system uptime and kernel version.
+- display_disk_io(): Displays live disk I/O statistics including read and write bytes for each disk.
 - clear_console(): Clears the terminal screen.
 - parse_arguments(): Parses command-line arguments for optional features and update interval.
-- main(): Main loop that updates the display based on the specified interval and optional features.
 
 Usage:
 Run the script in a terminal to start real-time monitoring. Use command-line arguments to enable optional features and set the update interval. Press Ctrl+C to exit.
@@ -39,8 +40,6 @@ import time
 from collections import defaultdict
 from tabulate import tabulate
 import argparse
-import sys
-import select
 
 # ANSI escape codes for colors
 HEADER_COLOR    = "\033[1;34m"  # Bold Blue
