@@ -444,9 +444,7 @@ if __name__ == "__main__":
         parser.add_argument('--show-load', action='store_true', help='Display load average')
         parser.add_argument('--show-system', action='store_true', help='Display system info')
         parser.add_argument('--show-disk-io', action='store_true', help='Display disk I/O statistics')
-        parser.add_argument('--show-disk-io', action='store_true', help='Display disk I/O statistics')
         parser.add_argument('--show-all', action='store_true', help='Display all optional features')
-        parser.add_argument('--show-most', action='store_true', help='Display all optional features')
         parser.add_argument('--show-most', action='store_true', help='Display all optional features')
         return parser.parse_args()
 
